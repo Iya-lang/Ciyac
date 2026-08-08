@@ -64,21 +64,21 @@ void REPL(char* argv[]) {
     if (strcmp(input, ".exit") == 0){
       printf("Exiting...\n");
       free(input);
-      input = NULL; //Don't forget the dangling pointers =)
+      input = NULL;
       return;
-    } else if (strcmp(input, ".linktosource") == 0){ //I change link to source because the word code is broad, but source mean in where is it from
+    } else if (strcmp(input, ".linktosource") == 0){
       printf("link: https://github.com/johnryzon123/Ciya.git\n");
 
       #if defined(PLATFORM_LINUX)
       system("xdg-open https://github.com/johnryzon123/Ciya.git");
       #elif defined(PLATFORM_MACOS)
       system("open https://github.com/johnryzon123/Ciya.git");
-      #elif defined (PLATFORM_WINDOWS)
+      #elif defined(PLATFORM_WINDOWS)
       system("start https://github.com/johnryzon123/Ciya.git");
       #endif
       free(input);
       input = NULL;
-    } else if (strcmp(input, ".freemem") == 0){ //Add it to free memory (idk why)
+    } else if (strcmp(input, ".freemem") == 0){
       free(input);
       input = NULL;
       printf("Memory free!\n");
@@ -105,7 +105,7 @@ void REPL(char* argv[]) {
       run(lexer.tokens.tokens);
       free(lexer.tokens.tokens);
     }
-    free(input); // make sure we free the pointer, we don't want any memory leaks
+    free(input);
     input = NULL;
   }
 }
