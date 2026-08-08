@@ -24,6 +24,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <string.h>
 #include "utils/repl.h"
 #include "utils/getline.h"
+#include "misc/platform.h"
 
 static void debugToken(Token* token) {
   printf("==== Token ====\n");
@@ -63,32 +64,32 @@ void REPL(char* argv[]) {
     if (strcmp(input, ".exit") == 0){
       printf("Exiting...\n");
       free(input);
-      input = NULL;
+      input = NULL; //Don't forget the dangling pointers =)
       return;
-    } else if (strcmp(input, ".linktosource") == 0){
+    } else if (strcmp(input, ".linktosource") == 0){ //I change link to source because the word code is broad, but source mean in where is it from
       printf("link: https://github.com/johnryzon123/Ciya.git\n");
 
-      #if defined(__linux__)
+      #if defined(PLATFORM_LINUX)
       system("xdg-open https://github.com/johnryzon123/Ciya.git");
-      #elif defined(__APPLE__)
+      #elif defined(PLATFORM_MACOS)
       system("open https://github.com/johnryzon123/Ciya.git");
-      #elif defined(_WIN32) || defined(WIN64_)
+      #elif defined (PLATFORM_WINDOWS)
       system("start https://github.com/johnryzon123/Ciya.git");
       #endif
       free(input);
       input = NULL;
-    } else if (strcmp(input, ".freemem") == 0){
+    } else if (strcmp(input, ".freemem") == 0){ //Add it to free memory (idk why)
       free(input);
       input = NULL;
       printf("Memory free!\n");
     } else if (strcmp(input, ".websource") == 0){
       printf("link: https://github.com/Ciya-VM/Ciya-VM.github.io.git\n");
 
-      #if defined(__linux__)
+      #if defined(PLATFORM_LINUX)
       system("xdg-open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
-      #elif defined(__APPLE__)
+      #elif defined(PLATFORM_MACOS)
       system("open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
-      #elif defined(_WIN32) || defined(WIN64_)
+      #elif defined(PLATFORM_WINDOWS)
       system("start https://github.com/Ciya-VM/Ciya-VM.github.io.git");
       #endif
       free(input);
@@ -104,7 +105,7 @@ void REPL(char* argv[]) {
       run(lexer.tokens.tokens);
       free(lexer.tokens.tokens);
     }
-    free(input);
+    free(input); // make sure we free the pointer, we don't want any memory leaks
     input = NULL;
   }
 }
