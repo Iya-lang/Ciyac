@@ -24,6 +24,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <string.h>
 #include "utils/repl.h"
 #include "utils/getline.h"
+#include "misc/platform.h"
 
 static void debugToken(Token* token) {
   printf("==== Token ====\n");
@@ -55,8 +56,8 @@ void REPL(char* argv[]) {
 
   printf("Note: Type '.help' to view the current commands\n");
   while (1) {
-    // An repl uses an "infinite" number of chars in input which means that NO LIMIT 
-    // to achieve this, I'll make a custom version of getline(). 
+    // An repl uses an "infinite" number of chars in input which means that NO LIMIT
+    // to achieve this, I'll make a custom version of getline().
     printf(">>> "); // print the starting thing
     char* input = getLine(); // in here, we use a pointer to make it dynamically expandable
     Lexer lexer;
@@ -68,11 +69,11 @@ void REPL(char* argv[]) {
     } else if (strcmp(input, ".linktosource") == 0){ //I change link to source because the word code is broad, but source mean in where is it from
       printf("link: https://github.com/johnryzon123/Ciya.git\n");
 
-      #if defined(__linux__)
-      system("xdg-open https://github.com/johnryzon123/Ciya.git"); 
-      #elif defined(__APPLE__)
+      #if defined(PLATFORM_LINUX)
+      system("xdg-open https://github.com/johnryzon123/Ciya.git");
+      #elif defined(PLATFORM_MACOS)
       system("open https://github.com/johnryzon123/Ciya.git");
-      #elif defined(_WIN32) || defined(WIN64_)
+      #elif defined(PLATFORM_WINDOWS)
       system("start https://github.com/johnryzon123/Ciya.git");
       #endif
       free(input);
@@ -84,11 +85,11 @@ void REPL(char* argv[]) {
     } else if (strcmp(input, ".websource") == 0){
       printf("link: https://github.com/Ciya-VM/Ciya-VM.github.io.git\n");
 
-      #if defined(__linux__)
+      #if defined(PLATFORM_LINUX)
       system("xdg-open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
-      #elif defined(__APPLE__)
+      #elif defined(PLATFORM_MACOS)
       system("open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
-      #elif defined(_WIN32) || defined(WIN64_)
+      #elif defined(PLATFROM_WINDOWS)
       system("start https://github.com/Ciya-VM/Ciya-VM.github.io.git");
       #endif
       free(input);
