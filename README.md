@@ -42,8 +42,8 @@ support.
 ## How to install the packages:
 <img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/b6a2cff3-7c81-464c-9775-82c822137046" />
 
-To install the Linux or BSD packages, you need to first have `wget` for this; most mainstream Linux distros come with it
-But to check, here's the command
+To install the Linux or BSD packages, you need to first have `wget` for this; most mainstream Linux distros or heavy-duty distros come with it
+But to check if you have it, here's the command:
 
 ```bash
 wget --version
@@ -99,8 +99,13 @@ But there are *different ways* to install the packages, and it depends on what f
 [Our official Wiki](https://github.com/Ciya-VM/Ciya/wiki/Introduction),
 [Our website](https://ciya-vm.github.io/),
 [Development code](https://github.com/Ciya-VM/Ciya/tree/development),
-[Minimal code](https://github.com/Ciya-VM/Ciya/tree/minimalist)
+[Minimal code](https://github.com/Ciya-VM/Ciya/tree/minimalist),
+[HTML source code](https://github.com/Ciya-VM/Ciya-VM.github.io)
 
+# Q&A:
+
+If you have any *problems* or *questions* to ask, please make them in the discussion; the community may answer them, but
+we'll respond in a span of hours to days. But hope y'all have a good day =)!
 
 Repo made by `Johnryzon Z. Abejero`
 
