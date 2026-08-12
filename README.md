@@ -42,7 +42,14 @@ support.
 ## How to install the packages:
 <img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/b6a2cff3-7c81-464c-9775-82c822137046" />
 
-To install the Linux or BSD packages, you need to first have `wget` for this, but if you don't have then here's a way to install it
+To install the Linux or BSD packages, you need to first have `wget` for this; most mainstream Linux distros or heavy-duty distros come with it
+But to check if you have it, here's the command:
+
+```bash
+wget --version
+```
+
+If it says a version like `1.21.4`, then great! Else, here's the command to install it:
 
 On Debian:
 ```bash
@@ -89,7 +96,16 @@ But there are *different ways* to install the packages, and it depends on what f
 
 ## More details in:
 
-[Our official Wiki](https://github.com/Ciya-VM/Ciya/wiki/Introduction), [Our website](https://ciya-vm.github.io/), [Development code](https://github.com/Ciya-VM/Ciya/tree/development)
+[Our official Wiki](https://github.com/Ciya-VM/Ciya/wiki/Introduction),
+[Our website](https://ciya-vm.github.io/),
+[Development code](https://github.com/Ciya-VM/Ciya/tree/development),
+[Minimal code](https://github.com/Ciya-VM/Ciya/tree/minimalist),
+[HTML source code](https://github.com/Ciya-VM/Ciya-VM.github.io)
+
+# Q&A:
+
+If you have any *problems* or *questions* to ask, please make them in the discussion; the community may answer them, but
+we'll respond in a span of hours to days. But hope y'all have a good day =)!
 
 Repo made by `Johnryzon Z. Abejero`
 
