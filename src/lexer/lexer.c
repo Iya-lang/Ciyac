@@ -20,6 +20,28 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <ctype.h>
 #include "private_lexer.h"
 
+static void skipSpaces(Lexer* lexer) {
+  while (1) {
+    switch (peekChar(lexer)) {
+    case '#':
+      while (1) {
+        char c;
+        if ((c = peekChar(lexer)) == '\n' | c == '\0') break;
+        moveChar(lexer);
+      }
+      break;
+    case ' ':
+    case '\r': // Very uncommon in linux
+    case '\t': // Tab character
+    case '\n': // Newline character
+      moveChar(lexer);
+      break;
+    default:
+      return; // exit if it is un-skipable
+    }
+  }
+}
+
 Token* scanTokens(Lexer* lexer) {
   while (1) {
     if (lexer->tokens.count >= lexer->tokens.capacity)
@@ -34,6 +56,8 @@ Token* scanTokens(Lexer* lexer) {
 }
 
 Token scanToken(Lexer* lexer) {
+  skipSpaces(lexer);
+  lexer->start = lexer->current;
   char c = peekChar(lexer);
 
   if (c == '\0') return setupToken(lexer, TOKEN_EOF);
