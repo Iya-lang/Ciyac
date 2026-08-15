@@ -20,15 +20,8 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #define INCLUDE_LEXER_LEXER_H
 #include "token.h"
 
-typedef struct Tokens {
-  int count;
-  int capacity; // oops, buffer=strings
-  Token* tokens;
-} Tokens;
-
 // This will hold the lexer's important values that need to be passed around
 typedef struct Lexer {
-  Tokens tokens;
   char* start; // this will hold the starting string address of the current token
   char* current; // traces the current character to the end
   // Token currentToken;
@@ -36,8 +29,6 @@ typedef struct Lexer {
 
 // scanToken scans 1 token only, it groups a chunk of characters into easy spotting labeled structures
 Token scanToken(Lexer* lexer); // it passes the lexer struct around to keep the same values
-// Scans more then 1 tokens, must use this function instead of scanToken from other dimensions in the language
-Token* scanTokens(Lexer* lexer);
 // This function initializes the lexer for use
 Lexer initLexer(char* src);
 #endif
