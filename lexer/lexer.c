@@ -42,19 +42,6 @@ static void skipSpaces(Lexer* lexer) {
   }
 }
 
-Token* scanTokens(Lexer* lexer) {
-  while (1) {
-    if (lexer->tokens.count >= lexer->tokens.capacity)
-      lexer->tokens.capacity *= 2;
-      lexer->tokens.tokens = realloc(lexer->tokens.tokens, lexer->tokens.capacity * sizeof(Token));
-
-    if ((lexer->tokens.tokens[lexer->tokens.count] = scanToken(lexer)).type == TOKEN_EOF)
-      return lexer->tokens.tokens;
-
-    lexer->tokens.count++;
-  }
-}
-
 Token scanToken(Lexer* lexer) {
   skipSpaces(lexer);
   lexer->start = lexer->current;
@@ -89,9 +76,6 @@ Token scanToken(Lexer* lexer) {
 
 Lexer initLexer(char* src) {
   Lexer lexer;
-  lexer.tokens.capacity = 50;
-  lexer.tokens.count = 0;
-  lexer.tokens.tokens = malloc(sizeof(Token) * lexer.tokens.capacity);
   lexer.current = src;
   lexer.start = src;
   return lexer;
