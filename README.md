@@ -5,27 +5,15 @@
 
 Now, we're trying to make a new project called `Ciya`.
 
-**Ciya** is a new programming language designed for speed.
+**Ciya**, a fast, cross-platform programming language from the Philippines/Vietnam written in C.
 The name **Ciya** came from the word `Siya`, which means he/she in filipino/tagalog language, 
-We want `Ciya` to be a bigger leap than its successor, `CRy-VM`.
-We expect that it is mostly written in the
-[C Programming Language](https://en.wikipedia.org/wiki/C_(programming_language)).
+We want `Ciya` to be a bigger and faster leap than its successor, `CRy-VM`.
 
 For now, we're still in development,
 but if you have any ideas to share, we'll try our best to achieve them.
 
 ## Wanna collaborate?
-Feel free to collaborate on this project, but you MUST follow the license and policy
-
-## Policy(Rules):
-+ You should never swear at or intimidate others in any part of the software, not even on PRs.
-+ Must not make a single thing in the project dependent on only
- 1 operating system
-feature that leads to it not being cross-platform
-+ Please report to us when there's any problem:
-    No spambots must get through! No email is posted. 
-    * Contributor note: I risked it; here's my email: phuocthanhlamnguyen@gmail.com
-    * GitHub issues (more preferred)
+Please read our CONTRIBUTING file.
 
 ## Essential tools:
   * [GCC](https://gcc.gnu.org/) ([Clang](https://clang.llvm.org/) or [Mircosoft C/C++ Compiler](https://aka.ms/vs/17/release/vs_BuildTools.exe)): for compiling code
