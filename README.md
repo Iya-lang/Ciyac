@@ -5,27 +5,15 @@
 
 Now, we're trying to make a new project called `Ciya`.
 
-**Ciya** is a new programming language designed for speed.
+**Ciya**, a fast, cross-platform programming language from the Philippines/Vietnam written in C.
 The name **Ciya** came from the word `Siya`, which means he/she in filipino/tagalog language, 
-We want `Ciya` to be a bigger leap than its successor, `CRy-VM`.
-We expect that it is mostly written in the
-[C Programming Language](https://en.wikipedia.org/wiki/C_(programming_language)).
+We want `Ciya` to be a bigger and faster leap than its successor, `CRy-VM`.
 
 For now, we're still in development,
 but if you have any ideas to share, we'll try our best to achieve them.
 
 ## Wanna collaborate?
-Feel free to collaborate on this project, but you MUST follow the license and policy
-
-## Policy(Rules):
-+ You should never swear at or intimidate others in any part of the software, not even on PRs.
-+ Must not make a single thing in the project dependent on only
- 1 operating system
-feature that leads to it not being cross-platform
-+ Please report to us when there's any problem:
-    No spambots must get through! No email is posted. 
-    * Contributor note: I risked it; here's my email: phuocthanhlamnguyen@gmail.com
-    * GitHub issues (more preferred)
+Please read our CONTRIBUTING file.
 
 ## Essential tools:
   * [GCC](https://gcc.gnu.org/) ([Clang](https://clang.llvm.org/) or [Mircosoft C/C++ Compiler](https://aka.ms/vs/17/release/vs_BuildTools.exe)): for compiling code
@@ -49,57 +37,43 @@ support.
 ## How to install the packages:
 <img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/b6a2cff3-7c81-464c-9775-82c822137046" />
 
-To install the Linux or BSD packages, you need to first have `wget` for this; most mainstream Linux distros or heavy-duty distros come with it
-But to check if you have it, here's the command:
-
+To install the Linux or BSD packages, use curl or wget; we'll use curl as it is very common:
+First, we get the tarball from the latest release:
 ```bash
-wget --version
+curl -o ciya.tar.gz -L https://github.com/Ciya-VM/Ciya/archive/refs/tags/v0.0.3.tar.gz
 ```
 
-If it says a version like `1.21.4`, then great! Else, here's the command to install it:
-
-On Debian:
+And then, we extract it:
 ```bash
-sudo apt install wget -y 
+tar -xzvf ciya-linux.tar.gz
 ```
 
-On Red Hat:
+Apply permissions:
 ```bash
-sudo dnf install wget -y # On RHEL 8 to RHEL 9
-sudo yum install wget -y # on older versions of RHEL
+chmod +x ciya
 ```
 
-On Arch Linux:
+And Booom, you can run it; it's that simple:
 ```bash
-sudo pacman -Syu wget
+./ciya
 ```
 
-On Alpine Linux:
+Here is every command altogether:
 ```bash
-sudo apk add wget
-```
-
-On FreeBSD:
-```bash
-pkg install wget
-```
-
-After you have wget, you can now get the package you need by typing the command:
-
-```bash
-wget -O <binary name> <binary link>
-```
-
-After that, you can install in different ways, but generally, you'll get the .tar.gz or the package; I recommend the tar.gz one, like this:
-
-```bash
-wget -O ciya-linux.tar.gz https://github.com/Ciya-VM/Ciya/raw/main/package/tarball/ciya-linux.tar.gz # First, get the file
-tar -xzvf ciya-linux.tar.gz # Second, extract the file
-chrom +x <binary file> # To handle the premission
-./<binary file> # run it!
+curl -o ciya.tar.gz -L https://github.com/Ciya-VM/Ciya/archive/refs/tags/v0.0.3.tar.gz
+tar -xzvf ciya-linux.tar.gz
+chmod +x ciya
+./ciya
 ```
 
 But there are *different ways* to install the packages, and it depends on what fits you!
+An example is using a .deb file:
+```bash
+# Get the .deb file
+curl -o ciya.deb -L https://github.com/Ciya-VM/Ciya/releases/download/v0.0.3/ciya-linux_0.0.3_amd64.deb
+sudo apt install ciya.deb # Then just install it
+ciya # Run it
+```
 
 ## More details in:
 

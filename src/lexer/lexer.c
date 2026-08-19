@@ -16,7 +16,6 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdlib.h>
 #include <ctype.h>
 #include "private_lexer.h"
 
@@ -25,8 +24,8 @@ static void skipSpaces(Lexer* lexer) {
     switch (peekChar(lexer)) {
     case '#':
       while (1) {
-        char c;
-        if ((c = peekChar(lexer)) == '\n' | c == '\0') break;
+        char c = peekChar(lexer);
+        if (c == '\n' | c == '\0') break;
         moveChar(lexer);
       }
       break;
@@ -39,19 +38,6 @@ static void skipSpaces(Lexer* lexer) {
     default:
       return; // exit if it is un-skipable
     }
-  }
-}
-
-Token* scanTokens(Lexer* lexer) {
-  while (1) {
-    if (lexer->tokens.count >= lexer->tokens.capacity)
-      lexer->tokens.capacity *= 2;
-      lexer->tokens.tokens = realloc(lexer->tokens.tokens, lexer->tokens.capacity * sizeof(Token));
-
-    if ((lexer->tokens.tokens[lexer->tokens.count] = scanToken(lexer)).type == TOKEN_EOF)
-      return lexer->tokens.tokens;
-
-    lexer->tokens.count++;
   }
 }
 
@@ -89,9 +75,6 @@ Token scanToken(Lexer* lexer) {
 
 Lexer initLexer(char* src) {
   Lexer lexer;
-  lexer.tokens.capacity = 50;
-  lexer.tokens.count = 0;
-  lexer.tokens.tokens = malloc(sizeof(Token) * lexer.tokens.capacity);
   lexer.current = src;
   lexer.start = src;
   return lexer;

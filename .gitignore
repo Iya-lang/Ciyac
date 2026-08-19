@@ -1,4 +1,6 @@
 .cache/
 .idea/
+package/
+bin/
 build/
 linux-build/

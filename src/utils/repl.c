@@ -32,17 +32,8 @@ static void debugToken(Token* token) {
   printf("Lexeme: %.*s\n\n", token->length, token->start);
 }
 
-static void debugTokens(Token* tokens) {
-  Token* _tokens = tokens;
-  while (_tokens->type != TOKEN_EOF) {
-    debugToken(_tokens);
-    _tokens++;
-  }
-  debugToken(_tokens);
-}
-
-static void run(Token* tokens) {
-  debugTokens(tokens);
+static void run(Token token) {
+  debugToken(&token);
 }
 
 // See meaning on "utils/repl.h"
@@ -101,9 +92,7 @@ void REPL(char* argv[]) {
       input = NULL;
     } else{
       lexer = initLexer(input);
-      scanTokens(&lexer);
-      run(lexer.tokens.tokens);
-      free(lexer.tokens.tokens);
+      run(scanToken(&lexer));
     }
     free(input);
     input = NULL;
