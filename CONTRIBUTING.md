@@ -12,6 +12,7 @@
 * **cross-platform**; it doesn't mean that you have to include every single hardware existing but have support for the common daily programming hardware (Windows, linux, and mac)
 * **exactly 2-spaced indented in source code** or it won't be accepted.
 * **make the repo clean**; Do not show any binaries/packages on the repo; show it in github releases.
+* **clean**; Do not ever liter the repo with binary files; repo=source code, not binary dumps.
 
 ## How do you compile the project?
 To compile it, make sure that you at least have the first 3 tools listed:
