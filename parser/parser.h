@@ -16,6 +16,9 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#ifndef INCLUDE_PARSER_PARSER_H
+#define INCLUDE_PARSER_PARSER_H
+
 #include "lexer/token.h"
 #include "ast.h"
 
@@ -26,3 +29,5 @@ typedef struct Parser {
 
   ASTPool ast_pool;
 } Parser;
+
+#endif

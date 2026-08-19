@@ -16,7 +16,6 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdlib.h>
 #include <ctype.h>
 #include "private_lexer.h"
 
@@ -25,8 +24,8 @@ static void skipSpaces(Lexer* lexer) {
     switch (peekChar(lexer)) {
     case '#':
       while (1) {
-        char c;
-        if ((c = peekChar(lexer)) == '\n' | c == '\0') break;
+        char c = peekChar(lexer);
+        if (c == '\n' | c == '\0') break;
         moveChar(lexer);
       }
       break;
