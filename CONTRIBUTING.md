@@ -36,6 +36,10 @@ $ cmake --build build # Compiles the project
 $ ./build/ciya # Runs the executable (this may behave differently on Windows)
 ```
 
+## Is the Wiki outdated?
+If you see the wiki is outdated or factually wrong, please let us know by using **GitHub issues** 
+or email the contributor (phuocthanhlamnguyen@gmail.com). We'll reply and actively fix it
+within a span of a few minutes to days. But please let us know =)
 ___
 **That's all, thank you and god bless,**
 
