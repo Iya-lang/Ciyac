@@ -1,0 +1,46 @@
+name: Release CI/CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install nFPM
+        run: |
+          go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest
+
+      - name: Build C Binary
+        run: |
+          mkdir -p bin
+          gcc -O2 src/main.c -o ./bin/ciya
+
+      - name: Package with nFPM
+        run: |
+          mkdir -p package
+          nfpm package --config nfpm.yaml --target package/ciya-${{ github.ref_name }}-amd64.deb
+          nfpm package --config nfpm.yaml --target package/ciya-${{ github.ref_name }}-amd64.rpm
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            package/*.deb
+            package/*.rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
