@@ -28,10 +28,17 @@ Then you run the series of commands:
 $ cmake -B build # Prepares the build folder
 ```
 
+Or you could do:
+```bash
+$ cmake -S . -B build # More syntax, but for me, it's worth it
+```
+
+Then, you compile it: 
 ```bash
 $ cmake --build build # Compiles the project
 ```
 
+Lastly, you can run it (Note: on Windows, it's different):
 ```bash
 $ ./build/ciya # Runs the executable (this may behave differently on Windows)
 ```
