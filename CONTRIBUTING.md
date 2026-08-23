@@ -7,6 +7,8 @@
 ## Did you fix a bug? Made more features?
 1) Open a new GitHub pull request.
 2) Ensure that the pull request has a clear problem and its solution or added feature.
+3) You have to give clear details about the code, how it works, and give us a video
+if the build failed or not
 
 ## Make sure to make the project stay...
 * **cross-platform**; it doesn't mean that you have to include every single existing hardware, but have support for the common daily programming hardware (Windows, Linux, and Mac)
