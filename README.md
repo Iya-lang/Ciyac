@@ -32,7 +32,7 @@ support.
  * Working lexer
 ## Cons:
  * No standard libraries
- * No support for file reading
+
 
 ## How to install the packages:
 <img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/b6a2cff3-7c81-464c-9775-82c822137046" />
@@ -77,11 +77,10 @@ ciya # Run it
 
 ## More details in:
 
-[Our official Wiki](https://github.com/Ciya-VM/Ciya/wiki/Introduction),
-[Our website](https://ciya-vm.github.io/),
-[Development code](https://github.com/Ciya-VM/Ciya/tree/development),
-[Minimal code](https://github.com/Ciya-VM/Ciya/tree/minimalist),
-[HTML source code](https://github.com/Ciya-VM/Ciya-VM.github.io)
+[Our official Wiki](https://github.com/Ciya-VM/Ciyac/wiki/Introduction),
+[Our website](https://iya-lang.github.io/),
+[Development code](https://github.com/Iya-lang/Ciyac/tree/development),
+[HTML source code](https://github.com/Iya-lang/iya-lang.github.io)
 
 # Q&A:
 

@@ -50,7 +50,9 @@ void REPL(char* argv[]) {
     // An repl uses an "infinite" number of chars in input which means that NO LIMIT
     // to achieve this, I'll make a custom version of getline().
     printf(">>> "); // print the starting thing
-    char* input = getLine(); // in here, we use a pointer to make it dynamically expandable
+    unsigned int count = 0;
+    char* input = getLine(&count, stdin); // in here, we use a pointer to make it dynamically expandable
+    input[count] = '\0'; // Manually put the null terminator
     Lexer lexer;
     if (strcmp(input, ".exit") == 0){
       printf("Exiting...\n");
