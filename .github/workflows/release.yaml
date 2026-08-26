@@ -26,21 +26,21 @@ jobs:
 
       - name: Build C Binary
         run: |
-          mkdir -p bin
-          gcc -O2 src/main.c -o ./bin/ciya
+          cmake -B build
+          cmake --build build
 
       - name: Package with nFPM
         run: |
-          mkdir -p package
-          nfpm package --config nfpm.yaml --target package/ciya-${{ github.ref_name }}-amd64.deb
-          nfpm package --config nfpm.yaml --target package/ciya-${{ github.ref_name }}-amd64.rpm
+          mkdir -p packages
+          nfpm packages --config config/nfpm.yaml --target packages/ciya-${{ github.ref_name }}-amd64.deb
+          nfpm packages --config config/nfpm.yaml --target packages/ciya-${{ github.ref_name }}-amd64.rpm
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            package/*.deb
-            package/*.rpm
+            packages/*.deb
+            packages/*.rpm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
