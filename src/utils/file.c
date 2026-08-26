@@ -36,7 +36,7 @@ static FILE* readFile(char* filename) {
 void runFile(char* filename) {
   FILE* file = readFile(filename);
   unsigned int count;
-  Lexer lexer = initLexer(getLine(&count, file));
+  Lexer lexer = initLexer(getDelim(&count, file, '\0'));
   Parser parser = initParser(&lexer);
   parse(&parser);
 }

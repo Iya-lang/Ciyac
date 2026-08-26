@@ -20,6 +20,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #define INCLUDE_UTILS_GETLINE_H
 #include "stdio.h"
 
+char* getDelim(unsigned int* count, FILE* stream, char delim); // This function reads something until a delimiter
 // This function inputs "infinite" from the input buffer
 char* getLine(unsigned int* count, FILE* stream); // It returns an allocated string
 

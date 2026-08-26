@@ -22,8 +22,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "misc/return_vals.h"
 #define STARTING_INPUT_SIZE 15
 
-// getLine: This function will "infinitely" take input from the user
-char* getLine(unsigned int* count, FILE* stream) {
+char* getDelim(unsigned int* count, FILE* stream, char delim) {
   int/*char*/ c; // This will store the current character in the input buffer
   char* input; // input string
   unsigned int capacity = STARTING_INPUT_SIZE;
@@ -36,7 +35,7 @@ char* getLine(unsigned int* count, FILE* stream) {
   }
 
   // get every character in the input stream until the end
-  while ((c = getc(stream)) != '\n' && c != EOF) {
+  while ((c = getc(stream)) != delim && c != EOF) {
     if (count == NULL) {
       fprintf(stderr, "VM BUG: count is NULL; from getline\n");
       exit(BUG_ERROR);
@@ -50,4 +49,9 @@ char* getLine(unsigned int* count, FILE* stream) {
     input[(*count)++] = c;
   }
   return input; // return it
+}
+
+// getLine: This function will "infinitely" take input from the user
+char* getLine(unsigned int* count, FILE* stream) {
+  return getDelim(count, stream, '\n');
 }
