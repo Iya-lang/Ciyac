@@ -16,22 +16,17 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef INCLUDE_PARSER_PARSER_H
-#define INCLUDE_PARSER_PARSER_H
-
 #include "lexer/lexer.h"
-#include "ast.h"
+#include "lexer/token.h"
+#include "parser/parser.h"
+#include "private.h"
 
-typedef struct Parser {
-  Lexer* lexer;
-
-  Token previous;
-  Token current;
-  Token next;
-
-  ASTPool ast_pool;
-} Parser;
-
-Parser initParser(Lexer* lexer);
-void parse(Parser* parser);
-#endif
+Token moveToken(Parser* parser) {
+  parser->previous = parser->current;
+  parser->current = parser->next;
+  parser->next = scanToken(parser->lexer);
+  
+  if (parser->current.type == TOKEN_NONE)
+    moveToken(parser);
+  return parser->current;
+}

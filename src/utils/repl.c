@@ -19,21 +19,17 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+#include "parser/parser.h"
 #include "lexer/lexer.h"
 #include "lexer/token.h"
-#include <string.h>
 #include "utils/repl.h"
 #include "utils/getline.h"
 #include "misc/platform.h"
 
-static void debugToken(Token* token) {
-  printf("==== Token ====\n");
-  printf("Type: %d\n", token->type); // Note: This will print 9 for everything except for +.
-  printf("Lexeme: %.*s\n\n", token->length, token->start);
-}
-
-static void run(Token token) {
-  debugToken(&token);
+static void run(Lexer* lexer) {
+  Parser parser = initParser(lexer);
+  parse(&parser);
 }
 
 // See meaning on "utils/repl.h"
@@ -94,7 +90,7 @@ void REPL(char* argv[]) {
       input = NULL;
     } else{
       lexer = initLexer(input);
-      run(scanToken(&lexer));
+      run(&lexer);
     }
     free(input);
     input = NULL;
