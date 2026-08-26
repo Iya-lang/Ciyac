@@ -31,16 +31,16 @@ jobs:
 
       - name: Package with nFPM
         run: |
-          mkdir -p packages
-          nfpm packages --config config/nfpm.yaml --target packages/ciya-${{ github.ref_name }}-amd64.deb
-          nfpm packages --config config/nfpm.yaml --target packages/ciya-${{ github.ref_name }}-amd64.rpm
+          mkdir -p package
+          nfpm package --config config/nfpm.yaml --target package/ciya-${{ github.ref_name }}-amd64.deb
+          nfpm package --config config/nfpm.yaml --target package/ciya-${{ github.ref_name }}-amd64.rpm
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            packages/*.deb
-            packages/*.rpm
+            package/*.deb
+            package/*.rpm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
