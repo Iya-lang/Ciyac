@@ -16,22 +16,34 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h> //For printf()
-#include "misc/return_vals.h"
-#include "utils/repl.h"
-#include "utils/file.h"
+#include "lexer/lexer.h"
+#include "parser/parser.h"
+#include "private.h"
 
-// since you have custom return values then I'm making them
-int main(int argc, char* argv[]) {
-  if (argc > 2) {
-    fprintf(stderr, "USAGE: %s <command>\n", argv[0]);
-    return IO_ERROR;
-  } else if (argc == 2) {
-    runFile(argv[1]);
-    return EXIT_SUCCESS;
+static void debugToken(Token* token) {
+  printf("==== Token ====\n");
+  printf("Type: %d\n", token->type); // Note: This will print 9 for everything except for +.
+  printf("Lexeme: %.*s\n\n", token->length, token->start);
+}
+
+Parser initParser(Lexer* lexer) {
+  Parser parser;
+  parser.lexer = lexer;
+  parser.previous.type = TOKEN_NONE;
+  parser.current.type = TOKEN_NONE;
+  parser.next.type = TOKEN_NONE;
+
+  parser.ast_pool.capacity = 15;
+  parser.ast_pool.count = 0;
+  parser.ast_pool.ast_list = malloc(sizeof(AST) * parser.ast_pool.capacity);
+  return parser;
+}
+
+void parse(Parser* parser) {
+  while (parser->current.type != TOKEN_EOF) {
+    moveToken(parser);
+    debugToken(&parser->current);
   }
-
-  REPL(argv);
-  return EXIT_SUCCESS;
 }

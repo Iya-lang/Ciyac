@@ -16,22 +16,10 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdlib.h>
-#include <stdio.h> //For printf()
-#include "misc/return_vals.h"
-#include "utils/repl.h"
-#include "utils/file.h"
+#ifndef SRC_PARSER_PRIVATE_H
+#define SRC_PARSER_PRIVATE_H
+typedef struct Parser Parser;
+typedef struct Token Token;
 
-// since you have custom return values then I'm making them
-int main(int argc, char* argv[]) {
-  if (argc > 2) {
-    fprintf(stderr, "USAGE: %s <command>\n", argv[0]);
-    return IO_ERROR;
-  } else if (argc == 2) {
-    runFile(argv[1]);
-    return EXIT_SUCCESS;
-  }
-
-  REPL(argv);
-  return EXIT_SUCCESS;
-}
+Token moveToken(Parser* parser);
+#endif

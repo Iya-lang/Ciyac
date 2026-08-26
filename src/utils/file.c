@@ -16,22 +16,28 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h> //For printf()
+#include "parser/parser.h"
+#include "lexer/lexer.h"
 #include "misc/return_vals.h"
-#include "utils/repl.h"
 #include "utils/file.h"
+#include "utils/getline.h"
 
-// since you have custom return values then I'm making them
-int main(int argc, char* argv[]) {
-  if (argc > 2) {
-    fprintf(stderr, "USAGE: %s <command>\n", argv[0]);
-    return IO_ERROR;
-  } else if (argc == 2) {
-    runFile(argv[1]);
-    return EXIT_SUCCESS;
+static FILE* readFile(char* filename) {
+  FILE* file = fopen(filename, "rb");
+  if (file == NULL) {
+    fprintf(stderr, "MISSING: file '%s' in directory", filename);
+    exit(IO_ERROR);
   }
-
-  REPL(argv);
-  return EXIT_SUCCESS;
+  return file;
 }
+
+void runFile(char* filename) {
+  FILE* file = readFile(filename);
+  unsigned int count;
+  Lexer lexer = initLexer(getDelim(&count, file, '\0'));
+  Parser parser = initParser(&lexer);
+  parse(&parser);
+}
+
