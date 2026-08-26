@@ -18,6 +18,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include "parser/parser.h"
 #include "lexer/lexer.h"
 #include "misc/return_vals.h"
 #include "utils/file.h"
@@ -36,7 +37,7 @@ void runFile(char* filename) {
   FILE* file = readFile(filename);
   unsigned int count;
   Lexer lexer = initLexer(getLine(&count, file));
-
-  scanToken(&lexer);
+  Parser parser = initParser(&lexer);
+  parse(&parser);
 }
 
