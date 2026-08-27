@@ -33,7 +33,7 @@ char* getDelim(unsigned int* count, FILE* stream, char delim) {
   if (input == NULL) {
     exit(EXIT_FAILURE); // just exit
   }
-
+  
   // get every character in the input stream until the end
   while ((c = getc(stream)) != delim && c != EOF) {
     if (count == NULL) {

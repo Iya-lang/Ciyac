@@ -56,14 +56,14 @@ void REPL(char* argv[]) {
       input = NULL;
       return;
     } else if (strcmp(input, ".linktosource") == 0){
-      printf("link: https://github.com/johnryzon123/Ciya.git\n");
+      printf("link: https://github.com/Iya-lang/Ciyac.git\n");
 
       #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/johnryzon123/Ciya.git");
+      system("xdg-open https://github.com/Iya-lang/Ciyac.git");
       #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/johnryzon123/Ciya.git");
+      system("open https://github.com/Iya-lang/Ciyac.git");
       #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/johnryzon123/Ciya.git");
+      system("start https://github.com/Iya-lang/Ciyac.git");
       #endif
       free(input);
       input = NULL;
@@ -72,19 +72,19 @@ void REPL(char* argv[]) {
       input = NULL;
       printf("Memory free!\n");
     } else if (strcmp(input, ".websource") == 0){
-      printf("link: https://github.com/Ciya-VM/Ciya-VM.github.io.git\n");
+      printf("link: https://github.com/Iya-lang/iya-lang.github.io.git\n");
 
       #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
+      system("xdg-open https://github.com/Iya-lang/iya-lang.github.io");
       #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
+      system("open https://github.com/Iya-lang/iya-lang.github.io");
       #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/Ciya-VM/Ciya-VM.github.io.git");
+      system("start https://github.com/Iya-lang/iya-lang.github.io");
       #endif
       free(input);
       input = NULL;
     } else if (strcmp(input, ".help") == 0){
-      printf("USAGE: %s <args (developing; not supported)>\n", argv[0]);
+      printf("USAGE: %s <file>\n", argv[0]);
       printf("Commands: .help, .linktosource, .websource, .freemem, .exit\n");
       free(input);
       input = NULL;

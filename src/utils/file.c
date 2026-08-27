@@ -18,6 +18,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "parser/parser.h"
 #include "lexer/lexer.h"
 #include "misc/return_vals.h"
@@ -25,9 +26,13 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "utils/getline.h"
 
 static FILE* readFile(char* filename) {
+  if (strcmp(filename, "--version") == 0) {
+    printf("Ciyac v0.2.0-1\n");
+    exit(0);
+  }
   FILE* file = fopen(filename, "rb");
   if (file == NULL) {
-    fprintf(stderr, "MISSING: file '%s' in directory", filename);
+    fprintf(stderr, "MISSING: file '%s' in directory\n", filename);
     exit(IO_ERROR);
   }
   return file;
