@@ -16,17 +16,43 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#include <stdio.h>
+#include <stdlib.h>
 #include "lexer/lexer.h"
 #include "lexer/token.h"
 #include "parser/parser.h"
+#include "parser/ast.h"
 #include "private.h"
 
 Token moveToken(Parser* parser) {
+  if (parser->current.type == TOKEN_NONE) {
+    parser->current = scanToken(parser->lexer);
+    parser->next = scanToken(parser->lexer);
+    return parser->current; //Will exit for error works
+  }
   parser->previous = parser->current;
   parser->current = parser->next;
   parser->next = scanToken(parser->lexer);
-  
-  if (parser->current.type == TOKEN_NONE)
-    moveToken(parser);
   return parser->current;
+}
+
+void error(Parser* parser, const char* message) {
+  parser->had_error = true; // for got line handling in parser
+  fprintf(stderr, "[line %d] Error at '%.*s': %s\n", parser->lexer->line, parser->current.length, parser->current.start, message);
+}
+
+void resizeASTPool(Parser* parser) {
+  parser->ast_pool.capacity *= 2;
+  parser->ast_pool.ast_list = realloc(parser->ast_pool.ast_list, sizeof(AST) * parser->ast_pool.capacity);
+  if (parser->ast_pool.ast_list == NULL)
+    error(parser, "Failed to resize AST pool");
+}
+
+void createNode(Parser* parser, NODEType type) {
+  if (parser->ast_pool.count >= parser->ast_pool.capacity) {
+    resizeASTPool(parser);
+  }
+
+  AST* node = &parser->ast_pool.ast_list[parser->ast_pool.count++];
+  node->type = type;
 }

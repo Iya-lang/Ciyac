@@ -25,9 +25,16 @@ char peekChar(Lexer* lexer) {
   return *(lexer->current);
 } // peekChar
 
+// Returns the character at a specific offset; used as an "alias"
+char peekNChar(Lexer* lexer, int n) {
+  return *(lexer->current + n);
+} // peekNChar
+
 // The function of this is to move to the next character
 char moveChar(Lexer* lexer) {
   // Tip: ++ doesn't just add 1, it adds 1 then returns the previous unchanged value
+  if (peekChar(lexer) == '\0') return '\0'; // don't allow to past the boundaries
+  if (peekChar(lexer) == '\n') lexer->line++;
   return *(lexer->current++);
 } // moveChar
 
@@ -39,9 +46,21 @@ Token setupToken(Lexer* lexer, TokenType type) {
   // To calculate the length of the token, we subtract current and start
   // * Don't ever flip the 2 variable placements, it would cause in negative values.
   token.length = (unsigned int)(lexer->current - lexer->start);
+  token.line = lexer->line;
   token.type = type;
 
   // Synchronize start to the current character for the next token.
   lexer->start = lexer->current; // we don't want infinite loop bugs
+  return token;
+}
+
+// The `setupErrorToken` function sets up an error token for error reporting
+Token setupErrorToken(Lexer* lexer, const char* message) {
+  Token token;
+  token.message = (char*)message;
+  token.start = lexer->start; // Cast to char* to avoid const issues
+  token.length = lexer->current - lexer->start;
+  token.line = lexer->line;
+  token.type = TOKEN_ERROR;
   return token;
 }

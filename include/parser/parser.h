@@ -18,7 +18,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #ifndef INCLUDE_PARSER_PARSER_H
 #define INCLUDE_PARSER_PARSER_H
-
+#include <stdbool.h>
 #include "lexer/lexer.h"
 #include "ast.h"
 
@@ -30,6 +30,7 @@ typedef struct Parser {
   Token next;
 
   ASTPool ast_pool;
+  bool had_error;
 } Parser;
 
 Parser initParser(Lexer* lexer);

@@ -41,6 +41,7 @@ typedef enum TokenType {
 
   // Misc/others
   TOKEN_NONE, // Useful for nothing
+  TOKEN_ERROR, // For error reporting
   TOKEN_EOF // End of file
 } TokenType;
 

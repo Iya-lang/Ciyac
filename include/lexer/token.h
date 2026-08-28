@@ -26,8 +26,10 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 // This struct will hold the token information
 typedef struct Token {
   //wait, let's sort it in deccending form to save memory
+  unsigned int line;
   // start of the token
   char* start; // a pointer=8 bytes
+  char* message; // a pointer=8 bytes
   // this variable holds the length of the token(useful in debugging/error reporting)
   unsigned int length; // int is usually 4 bytes
   // acts as a label in the token

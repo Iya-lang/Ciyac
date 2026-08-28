@@ -24,7 +24,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 
 static void debugToken(Token* token) {
   printf("==== Token ====\n");
-  printf("Type: %d\n", token->type); // Note: This will print 9 for everything except for +.
+  printf("Type: %d\n", token->type); // Note: This will print the token's type in digits
   printf("Lexeme: %.*s\n\n", token->length, token->start);
 }
 
@@ -42,8 +42,26 @@ Parser initParser(Lexer* lexer) {
 }
 
 void parse(Parser* parser) {
-  while (parser->current.type != TOKEN_EOF) {
-    moveToken(parser);
+  while (moveToken(parser).type != TOKEN_EOF) {
+    if (parser->had_error) {
+      parser->had_error = false; // reset the error flag for the next
+      break; // This should be enough
+    }
+    
+    parser->had_error = false;
+    switch (parser->current.type) {
+      case TOKEN_NUMBER:
+      case TOKEN_NAME:
+        parseExpr(parser);
+        break;
+      case TOKEN_SAY:
+        parseSay(parser);
+        break;
+      default:
+        moveToken(parser);
+        error(parser, "Unexpected token");
+        break;
+    }
     debugToken(&parser->current);
   }
 }
