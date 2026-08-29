@@ -23,6 +23,8 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 // This will hold the lexer's important values that need to be passed around
 typedef struct Lexer {
   unsigned int line;
+  unsigned int column;
+  char* line_start; // this will hold the starting string address of the current line
   char* start; // this will hold the starting string address of the current token
   char* current; // traces the current character to the end
   // Token currentToken;

@@ -78,5 +78,6 @@ Lexer initLexer(char* src) {
   lexer.current = src;
   lexer.start = src;
   lexer.line = 1;
+  lexer.column = 0;
   return lexer;
 }

@@ -34,7 +34,12 @@ char peekNChar(Lexer* lexer, int n) {
 char moveChar(Lexer* lexer) {
   // Tip: ++ doesn't just add 1, it adds 1 then returns the previous unchanged value
   if (peekChar(lexer) == '\0') return '\0'; // don't allow to past the boundaries
-  if (peekChar(lexer) == '\n') lexer->line++;
+  lexer->column++; // increment column for each character that is moved
+  if (peekChar(lexer) == '\n') {
+    lexer->line++;
+    lexer->line_start = lexer->current;
+    lexer->column = 0; // reset column to 0 for the next line
+  }
   return *(lexer->current++);
 } // moveChar
 
@@ -43,10 +48,11 @@ char moveChar(Lexer* lexer) {
 Token setupToken(Lexer* lexer, TokenType type) {
   Token token; // Be careful not to change `Token* token`
   token.start = lexer->start;
+  token.line = lexer->line;
+  token.column = lexer->column;
   // To calculate the length of the token, we subtract current and start
   // * Don't ever flip the 2 variable placements, it would cause in negative values.
   token.length = (unsigned int)(lexer->current - lexer->start);
-  token.line = lexer->line;
   token.type = type;
 
   // Synchronize start to the current character for the next token.
@@ -58,9 +64,10 @@ Token setupToken(Lexer* lexer, TokenType type) {
 Token setupErrorToken(Lexer* lexer, const char* message) {
   Token token;
   token.message = (char*)message;
+  token.line = lexer->line;
+  token.column = lexer->column;
   token.start = lexer->start; // Cast to char* to avoid const issues
   token.length = lexer->current - lexer->start;
-  token.line = lexer->line;
   token.type = TOKEN_ERROR;
   return token;
 }

@@ -31,6 +31,7 @@ static void debugToken(Token* token) {
 Parser initParser(Lexer* lexer) {
   Parser parser;
   parser.lexer = lexer;
+  parser.lexer->line_start = parser.lexer->start;
   parser.previous.type = TOKEN_NONE;
   parser.current.type = TOKEN_NONE;
   parser.next.type = TOKEN_NONE;

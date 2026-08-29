@@ -39,6 +39,17 @@ Token moveToken(Parser* parser) {
 void error(Parser* parser, const char* message, Token* token) {
   parser->had_error = true; // for got line handling in parser
   fprintf(stderr, "[line %d] Error at '%.*s': %s\n", token->line, token->length, token->start, message);
+  const char* line_end = token->start;
+  while (*line_end != '\n' && *line_end != '\0') {
+    line_end++;
+  }
+  int line_length = line_end - parser->lexer->line_start;
+  printf("%4d| %.*s\n", token->line, line_length, parser->lexer->line_start);
+  printf("    | ");
+  for (unsigned int i = 1; i < token->column; i++) {
+    printf(" ");
+  }
+  printf("^\n");
 }
 
 void resizeASTPool(Parser* parser) {
