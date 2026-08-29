@@ -1,8 +1,7 @@
 name: "ciya"
 arch: "amd64"
 platform: "linux"
-version: "0.2.0"
-release: 1
+version: "0.0.3"
 section: "utils"
 priority: "optional"
 maintainer: "Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm"
