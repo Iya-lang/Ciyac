@@ -59,7 +59,7 @@ void parse(Parser* parser) {
         break;
       default:
         moveToken(parser);
-        error(parser, "Unexpected token");
+        error(parser, "Unexpected token", &parser->current);
         break;
     }
     debugToken(&parser->current);

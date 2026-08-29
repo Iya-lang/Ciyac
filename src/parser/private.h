@@ -22,7 +22,7 @@ typedef struct Parser Parser;
 typedef struct Token Token;
 typedef enum NODEType NODEType;
 
-void error(Parser* parser, const char* message);
+void error(Parser* parser, const char* message, Token* token);
 void parseValue(Parser* parser);
 void parseExpr(Parser* parser);
 void parseSay(Parser* parser);

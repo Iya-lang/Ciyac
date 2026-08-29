@@ -24,7 +24,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 void parseValue(Parser* parser) {
   #define TYPE parser->current.type
   if (TYPE != TOKEN_NUMBER && TYPE != TOKEN_NAME) {
-    error(parser, "Expected a value");
+    error(parser, "Expected a value", &parser->previous);
     return;
   }
 
@@ -33,6 +33,7 @@ void parseValue(Parser* parser) {
   } else if (parser->current.type == TOKEN_NAME) {
     createNode(parser, NODE_NAME);
   }
+  moveToken(parser);
   #undef TYPE
 }
 

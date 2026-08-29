@@ -36,16 +36,16 @@ Token moveToken(Parser* parser) {
   return parser->current;
 }
 
-void error(Parser* parser, const char* message) {
+void error(Parser* parser, const char* message, Token* token) {
   parser->had_error = true; // for got line handling in parser
-  fprintf(stderr, "[line %d] Error at '%.*s': %s\n", parser->lexer->line, parser->current.length, parser->current.start, message);
+  fprintf(stderr, "[line %d] Error at '%.*s': %s\n", token->line, token->length, token->start, message);
 }
 
 void resizeASTPool(Parser* parser) {
   parser->ast_pool.capacity *= 2;
   parser->ast_pool.ast_list = realloc(parser->ast_pool.ast_list, sizeof(AST) * parser->ast_pool.capacity);
   if (parser->ast_pool.ast_list == NULL)
-    error(parser, "Failed to resize AST pool");
+    error(parser, "Failed to resize AST pool", &parser->previous);
 }
 
 void createNode(Parser* parser, NODEType type) {
