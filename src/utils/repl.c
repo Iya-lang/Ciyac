@@ -22,8 +22,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <string.h>
 #include "parser/parser.h"
 #include "lexer/lexer.h"
-#include "lexer/token.h"
-#include "utils/repl.h"
+#include "utils/repl.h" 
 #include "utils/getline.h"
 #include "misc/platform.h"
 

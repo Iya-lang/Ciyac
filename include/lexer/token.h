@@ -25,11 +25,13 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 // this looks enough
 // This struct will hold the token information
 typedef struct Token {
-  //wait, let's sort it in deccending form to save memory
   // start of the token
   char* start; // a pointer=8 bytes
+  char* message; // a pointer=8 bytes
   // this variable holds the length of the token(useful in debugging/error reporting)
   unsigned int length; // int is usually 4 bytes
+  unsigned int line;
+  unsigned int column;
   // acts as a label in the token
   TokenType type; // an enum is just the same as int in runtime
 } Token; // A token is a temporary part of a programming language

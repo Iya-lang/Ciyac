@@ -69,7 +69,7 @@ Token scanToken(Lexer* lexer) {
       return handleName(lexer);
     }
 
-    return setupToken(lexer, TOKEN_EOF/*replaced by TOKEN_ERROR later on*/);
+    return setupErrorToken(lexer, "Unexpected character");
   }
 }
 
@@ -77,5 +77,7 @@ Lexer initLexer(char* src) {
   Lexer lexer;
   lexer.current = src;
   lexer.start = src;
+  lexer.line = 1;
+  lexer.column = 0;
   return lexer;
 }
