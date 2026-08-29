@@ -25,7 +25,7 @@ static void skipSpaces(Lexer* lexer) {
     case '#':
       while (1) {
         char c = peekChar(lexer);
-        if (c == '\n' || c == '\0') break;
+        if (c == '\n' | c == '\0') break;
         moveChar(lexer);
       }
       break;
@@ -63,9 +63,9 @@ Token scanToken(Lexer* lexer) {
   case ':':
     return setupToken(lexer, TOKEN_EQUALS);
   default:
-    if (isdigit(c)) {
+    if (isdigit(peekChar(lexer))) {
       return handleNumber(lexer);
-    } else if (isalpha(c)) {
+    } else if (isalpha(peekChar(lexer))) {
       return handleName(lexer);
     }
 

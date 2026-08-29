@@ -20,16 +20,12 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <stdio.h> //For printf()
 #include "misc/return_vals.h"
 #include "utils/repl.h"
-#include "utils/file.h"
 
 // since you have custom return values then I'm making them
 int main(int argc, char* argv[]) {
-  if (argc > 2) {
-    fprintf(stderr, "USAGE: %s <command>\n", argv[0]);
+  if (argc > 1) {
+    printf("File reading is not supported yet.\n");
     return IO_ERROR;
-  } else if (argc == 2) {
-    runFile(argv[1]);
-    return EXIT_SUCCESS;
   }
 
   REPL(argv);

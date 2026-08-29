@@ -40,7 +40,6 @@ typedef enum TokenType {
   TOKEN_SAY,
 
   // Misc/others
-  TOKEN_NONE, // Useful for nothing
   TOKEN_EOF // End of file
 } TokenType;
 
