@@ -42,6 +42,8 @@ void runFile(char* filename) {
   FILE* file = readFile(filename);
   unsigned int count;
   Lexer lexer = initLexer(getDelim(&count, file, '\0'));
+  lexer.start[count] = '\0'; // Null-terminate the string
+  fclose(file);
   Parser parser = initParser(&lexer);
   parse(&parser);
 }
