@@ -74,5 +74,7 @@ void parseExpr/*expression*/(Parser* parser) {
 void parseSay(Parser* parser) {
   moveToken(parser);
   parseExpr(parser);
+
+  if (parser->had_error) return;
   createNode(parser, NODE_SAY);
 }
