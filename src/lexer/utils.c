@@ -37,7 +37,7 @@ char moveChar(Lexer* lexer) {
   lexer->column++; // increment column for each character that is moved
   if (peekChar(lexer) == '\n') {
     lexer->line++;
-    lexer->line_start = lexer->current;
+    lexer->line_start = lexer->current + 1;
     lexer->column = 0; // reset column to 0 for the next line
   }
   return *(lexer->current++);
