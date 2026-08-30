@@ -43,7 +43,6 @@ void parse(Parser* parser) {
       break; // This should be enough
     }
     
-    parser->had_error = false;
     switch (parser->current.type) {
       case TOKEN_NUMBER:
       case TOKEN_NAME:

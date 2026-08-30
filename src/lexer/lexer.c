@@ -73,11 +73,9 @@ Token scanToken(Lexer* lexer) {
   }
 }
 
-Lexer initLexer(char* src) {
-  Lexer lexer;
-  lexer.current = src;
-  lexer.start = src;
-  lexer.line = 1;
-  lexer.column = 0;
-  return lexer;
+void initLexer(char* src, Lexer* lexer) {
+  lexer->current = src;
+  lexer->start = src;
+  lexer->line = 1;
+  lexer->column = 0;
 }

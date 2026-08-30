@@ -34,5 +34,5 @@ typedef struct Lexer {
 // scanToken scans 1 token only, it groups a chunk of characters into easy spotting labeled structures
 Token scanToken(Lexer* lexer); // it passes the lexer struct around to keep the same values
 // This function initializes the lexer for use
-Lexer initLexer(char* src);
+void initLexer(char* src, Lexer* lexer);
 #endif

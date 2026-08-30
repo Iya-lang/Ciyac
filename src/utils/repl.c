@@ -32,7 +32,7 @@ static void run(Lexer* lexer) {
 }
 
 // See meaning on "utils/repl.h"
-void REPL(char* argv[]) {
+void REPL(char* argv[], Lexer* lexer) {
   printf("Ciya v0.0.2 interactive REPL\n");
   // Following GNU rights
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
@@ -48,7 +48,6 @@ void REPL(char* argv[]) {
     unsigned int count = 0;
     char* input = getLine(&count, stdin); // in here, we use a pointer to make it dynamically expandable
     input[count] = '\0'; // Manually put the null terminator
-    Lexer lexer;
     if (strcmp(input, ".exit") == 0){
       printf("Exiting...\n");
       free(input);
@@ -88,9 +87,8 @@ void REPL(char* argv[]) {
       free(input);
       input = NULL;
     } else{
-      lexer = initLexer(input);
-      lexer.token_debug = true;
-      run(&lexer);
+      initLexer(input, lexer);
+      run(lexer);
     }
     free(input);
     input = NULL;

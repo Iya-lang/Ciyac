@@ -19,9 +19,9 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #ifndef INCLUDE_UTILS_REPL_H
 #define INCLUDE_UTILS_REPL_H
 // write definitions here
-
+typedef struct Lexer Lexer;
 // Main repl entry point
-void REPL/*Read Evaluate and Print Loop*/(char* argv[]/*Put future argument here, eg. Lexer* lexer*/);
+void REPL/*Read Evaluate and Print Loop*/(char* argv[], Lexer* lexer);
 // ^ The Repl inputs the users, runs them and prints the result
 
 #endif
