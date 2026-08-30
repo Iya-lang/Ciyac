@@ -17,7 +17,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include <stdbool.h>
-
+#include <stdlib.h>
 #include "parser/parser.h"
 #include "private.h"
 
@@ -28,13 +28,21 @@ void parseValue(Parser* parser) {
     return;
   }
 
+  #define asts parser->ast_pool.ast_list
+  #define pool parser->ast_pool
   if (parser->current.type == TOKEN_NUMBER) {
     createNode(parser, NODE_NUMBER);
+    char* endptr;
+    asts[pool.count - 1].as.number = strtod(parser->current.start, &endptr);
   } else if (parser->current.type == TOKEN_NAME) {
     createNode(parser, NODE_NAME);
+    asts[pool.count - 1].as.string.start = parser->current.start;
+    asts[pool.count - 1].as.string.length = parser->current.length;
   }
   moveToken(parser);
   #undef TYPE
+  #undef pool
+  #undef asts
 }
 
 void parseExpr/*expression*/(Parser* parser) {
