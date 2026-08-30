@@ -19,8 +19,10 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 
 #ifndef INCLUDE_MISC_DEBUG_H
 #define INCLUDE_MISC_DEBUG_H
+typedef struct ASTPool ASTPool;
 typedef struct Token Token;
 
+void printAST(ASTPool pool);
 void printToken(Token* token);
 
 #endif

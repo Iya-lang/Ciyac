@@ -20,6 +20,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "misc/debug.h"
 #include "parser/parser.h"
 #include "lexer/lexer.h"
 #include "utils/repl.h" 
@@ -29,6 +30,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 static void run(Lexer* lexer) {
   Parser parser = initParser(lexer);
   parse(&parser);
+  printAST(parser.ast_pool);
 }
 
 // See meaning on "utils/repl.h"
