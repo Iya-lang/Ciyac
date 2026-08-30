@@ -16,17 +16,12 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef PLATFORM_H
-#define PLATFORM_H
-#if defined (_WIN32) || defined (_WIN64)
-    #define PLATFORM_WINDOWS 1
-    #define PATH_SEPERATOR '\\'
-#elif defined (__linux__)
-    #define PLATFORM_LINUX 1
-    #define PATH_SEPERATOR '/'
-#elif defined (__APPLE__) || defined(__MACH__)
-    #define PLATFORM_MACOS 1
-    #define PATH_SEPERATOR '/'
-#endif
+#include <stdio.h>
+#include "lexer/token.h"
+#include "misc/debug.h"
 
-#endif
+void printToken(Token* token) {
+  printf("==== Token ====\n");
+  printf("Type: %d\n", token->type); // Note: This will print the token's type in digits
+  printf("Lexeme: %.*s\n\n", token->length, token->start);
+}

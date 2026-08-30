@@ -89,6 +89,7 @@ void REPL(char* argv[]) {
       input = NULL;
     } else{
       lexer = initLexer(input);
+      lexer.token_debug = true;
       run(&lexer);
     }
     free(input);

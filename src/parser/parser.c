@@ -16,17 +16,11 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdio.h>
 #include <stdlib.h>
+#include "misc/debug.h"
 #include "lexer/lexer.h"
 #include "parser/parser.h"
 #include "private.h"
-
-static void debugToken(Token* token) {
-  printf("==== Token ====\n");
-  printf("Type: %d\n", token->type); // Note: This will print the token's type in digits
-  printf("Lexeme: %.*s\n\n", token->length, token->start);
-}
 
 Parser initParser(Lexer* lexer) {
   Parser parser;
@@ -63,6 +57,5 @@ void parse(Parser* parser) {
         error(parser, "Unexpected token", &parser->current);
         break;
     }
-    debugToken(&parser->current);
   }
 }

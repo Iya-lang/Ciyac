@@ -18,16 +18,17 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #ifndef INCLUDE_LEXER_LEXER_H
 #define INCLUDE_LEXER_LEXER_H
+#include <stdbool.h>
 #include "token.h"
 
 // This will hold the lexer's important values that need to be passed around
 typedef struct Lexer {
-  unsigned int line;
-  unsigned int column;
   char* line_start; // this will hold the starting string address of the current line
   char* start; // this will hold the starting string address of the current token
   char* current; // traces the current character to the end
-  // Token currentToken;
+  unsigned int line;
+  unsigned int column;
+  bool token_debug;
 } Lexer;
 
 // scanToken scans 1 token only, it groups a chunk of characters into easy spotting labeled structures

@@ -18,6 +18,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include "misc/debug.h"
 #include "lexer/lexer.h"
 #include "lexer/token.h"
 #include "parser/parser.h"
@@ -25,6 +26,9 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "private.h"
 
 Token moveToken(Parser* parser) {
+  if (parser->lexer->token_debug == true)
+    printToken(&parser->current);
+  
   if (parser->current.type == TOKEN_NONE) {
     parser->current = scanToken(parser->lexer);
     parser->next = scanToken(parser->lexer);
