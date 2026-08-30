@@ -30,7 +30,7 @@ static void skipSpaces(Lexer* lexer) {
       }
       break;
     case ' ':
-    case '\r': // Very uncommon in linux
+    case '\r': // Very uncommon in linux, common in windows
     case '\t': // Tab character
     case '\n': // Newline character
       moveChar(lexer);
