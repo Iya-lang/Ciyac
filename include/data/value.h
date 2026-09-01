@@ -16,41 +16,16 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef INCLUDE_PARSER_AST_H
-#define INCLUDE_PARSER_AST_H
+#ifndef INCLUDE_DATA_VALUE_H
+#define INCLUDE_DATA_VALUE_H
 
-typedef enum NODEType {
-  NODE_ADD,
-  NODE_SUBTRACT,
-  NODE_MULTIPLY,
-  NODE_DIVIDE,
+typedef union Value {
+  struct {
+    int length;
+    char* start;
+  } String;
 
-  NODE_ASSIGN,
-
-  NODE_NUMBER,
-  NODE_NAME,
-
-  NODE_SAY,
-} NODEType;
-
-
-typedef struct AST {
-  union {
-    struct {
-      char* start; unsigned int length;
-    } string;
-    double number;
-  } as;
-  NODEType type;
-  unsigned int left;
-  unsigned int right;
-} AST;
-
-typedef struct ASTPool {
-  AST* ast_list;
-  unsigned int count;
-  unsigned int capacity;
-} ASTPool;
+  double number;
+} Value; // we still need value
 
 #endif
-

@@ -71,11 +71,13 @@ void resizeASTPool(Parser* parser) {
     error(parser, "Failed to resize AST pool", &parser->previous);
 }
 
-void createNode(Parser* parser, NODEType type) {
+int createNode(Parser* parser, NODEType type) {
   if (parser->ast_pool.count >= parser->ast_pool.capacity) {
     resizeASTPool(parser);
   }
 
-  AST* node = &parser->ast_pool.ast_list[parser->ast_pool.count++];
+  int index = parser->ast_pool.count++;
+  AST* node = &parser->ast_pool.ast_list[index];
   node->type = type;
+  return index;
 }

@@ -23,12 +23,23 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 
 void printAST(ASTPool pool) {
   for (int i=0; i!=pool.count; i++) {
-    printf("==== AST ====\n");
+    printf("====%d NODE====\n", i);
     printf("Type: %d\n", pool.ast_list[i].type);
+    printf("Left Index: %d\n", pool.ast_list[i].left);
+    printf("Right Index: %d\n", pool.ast_list[i].right);
     printf("Number: %g\n", pool.ast_list[i].as.number);
     printf("String/Name: %.*s\n", pool.ast_list[i].as.string.length, pool.ast_list[i].as.string.start);
     printf("\n");
   }
+
+  printf("====%d NODE ====\n", pool.count);
+  printf("Type: %d\n", pool.ast_list[pool.count].type);
+  printf("Left Index: %d\n", pool.ast_list[pool.count].left);
+  printf("Right Index: %d\n", pool.ast_list[pool.count].right);
+  printf("Number: %g\n", pool.ast_list[pool.count].as.number);
+  printf("String/Name: %.*s\n", pool.ast_list[pool.count].as.string.length, pool.ast_list[pool.count].as.string.start);
+  printf("\n");
+
 }
 void printToken(Token* token) {
   printf("==== Token ====\n");

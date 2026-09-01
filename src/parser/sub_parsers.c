@@ -18,14 +18,32 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #include <stdbool.h>
 #include <stdlib.h>
+#include "parser/ast.h"
 #include "parser/parser.h"
 #include "private.h"
 
-void parseValue(Parser* parser) {
+
+static NODEType precedence(Parser* parser, TokenType type) {
+  switch (type) {
+    case TOKEN_MINUS:
+    case TOKEN_PLUS:
+      moveToken(parser);
+      return NODE_ADD;
+    case TOKEN_STAR:
+    case TOKEN_DIVIDE:
+      moveToken(parser);
+      return NODE_DIVIDE;
+      // it doesn't support 1 value, gotta fix this
+    default:
+      return -1;
+  }
+}
+
+int parseValue(Parser* parser) {
   #define TYPE parser->current.type
   if (TYPE != TOKEN_NUMBER && TYPE != TOKEN_NAME) {
-    error(parser, "Expected a value", &parser->previous);
-    return;
+    error(parser, "Expected a value", &parser->current);
+    return -1;
   }
 
   #define asts parser->ast_pool.ast_list
@@ -41,39 +59,36 @@ void parseValue(Parser* parser) {
   }
   moveToken(parser);
   #undef TYPE
+
+  return pool.count - 1;
   #undef pool
   #undef asts
 }
 
-void parseExpr/*expression*/(Parser* parser) {
+int parseExpr/*expression*/(Parser* parser, int min_weight, short op_count) {
+  int left = parseValue(parser);
+  int last_left = left;
+
   while (1) {
-    parseValue(parser);
-    switch (parser->current.type) {
-      case TOKEN_PLUS:
-        moveToken(parser);
-        createNode(parser, NODE_ADD);
-        break;
-      case TOKEN_MINUS:
-        moveToken(parser);
-        createNode(parser, NODE_SUBTRACT);
-        break;
-      case TOKEN_STAR:
-        moveToken(parser);
-        createNode(parser, NODE_MULTIPLY);
-        break;
-      case TOKEN_DIVIDE:
-        moveToken(parser);
-        createNode(parser, NODE_DIVIDE);
-        break;
-      default:
-        return;
+    Token current_op = parser->current;
+    NODEType weight = precedence(parser, parser->current.type);
+    if (weight == -1) break;
+    if (weight < min_weight) {
+      break;
     }
+
+    int right = parseExpr(parser, min_weight + 1, op_count++);
+    if (right == -1 && parser->had_error) break;
+    left = createNode(parser, weight);
+    parser->ast_pool.ast_list[left].left = last_left;
+    parser->ast_pool.ast_list[left].right = right;
   }
+  return left;
 }
 
 void parseSay(Parser* parser) {
   moveToken(parser);
-  parseExpr(parser);
+  parseExpr(parser, 0, 0);
 
   if (parser->had_error) return;
   createNode(parser, NODE_SAY);
