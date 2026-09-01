@@ -31,15 +31,6 @@ void printAST(ASTPool pool) {
     printf("String/Name: %.*s\n", pool.ast_list[i].as.string.length, pool.ast_list[i].as.string.start);
     printf("\n");
   }
-
-  printf("====%d NODE ====\n", pool.count);
-  printf("Type: %d\n", pool.ast_list[pool.count].type);
-  printf("Left Index: %d\n", pool.ast_list[pool.count].left);
-  printf("Right Index: %d\n", pool.ast_list[pool.count].right);
-  printf("Number: %g\n", pool.ast_list[pool.count].as.number);
-  printf("String/Name: %.*s\n", pool.ast_list[pool.count].as.string.length, pool.ast_list[pool.count].as.string.start);
-  printf("\n");
-
 }
 void printToken(Token* token) {
   printf("==== Token ====\n");
