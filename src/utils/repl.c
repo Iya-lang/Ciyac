@@ -26,6 +26,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "utils/repl.h" 
 #include "utils/getline.h"
 #include "misc/platform.h"
+#include "misc/repl_var.h"
 
 static void run(Lexer* lexer) {
   Parser parser = initParser(lexer);
@@ -35,6 +36,7 @@ static void run(Lexer* lexer) {
 
 // See meaning on "utils/repl.h"
 void REPL(char* argv[], Lexer* lexer) {
+  struct value1 value = {".linktosource", ".websource", ".freemem", ".exit", ".help"};
   printf("Ciya v0.0.2 interactive REPL\n");
   // Following GNU rights
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
@@ -50,12 +52,12 @@ void REPL(char* argv[], Lexer* lexer) {
     unsigned int count = 0;
     char* input = getLine(&count, stdin); // in here, we use a pointer to make it dynamically expandable
     input[count] = '\0'; // Manually put the null terminator
-    if (strcmp(input, ".exit") == 0){
+    if (strcmp(input, value.exiting) == 0){
       printf("Exiting...\n");
       free(input);
       input = NULL;
       return;
-    } else if (strcmp(input, ".linktosource") == 0){
+    } else if (strcmp(input, value.linkingsource) == 0){
       printf("link: https://github.com/Iya-lang/Ciyac.git\n");
 
       #if defined(PLATFORM_LINUX)
@@ -67,11 +69,11 @@ void REPL(char* argv[], Lexer* lexer) {
       #endif
       free(input);
       input = NULL;
-    } else if (strcmp(input, ".freemem") == 0){
+    } else if (strcmp(input, value.memclear) == 0){
       free(input);
       input = NULL;
       printf("Memory free!\n");
-    } else if (strcmp(input, ".websource") == 0){
+    } else if (strcmp(input, value.linkingweb) == 0){
       printf("link: https://github.com/Iya-lang/iya-lang.github.io.git\n");
 
       #if defined(PLATFORM_LINUX)
@@ -83,7 +85,7 @@ void REPL(char* argv[], Lexer* lexer) {
       #endif
       free(input);
       input = NULL;
-    } else if (strcmp(input, ".help") == 0){
+    } else if (strcmp(input, value.helpme) == 0){
       printf("USAGE: %s <file>\n", argv[0]);
       printf("Commands: .help, .linktosource, .websource, .freemem, .exit\n");
       free(input);
