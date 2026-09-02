@@ -32,6 +32,7 @@ static void run(Lexer* lexer) {
   Parser parser = initParser(lexer);
   parse(&parser);
   printAST(parser.ast_pool);
+  printf("If you need help, type .help!\n");
 }
 
 // See meaning on "utils/repl.h"
@@ -88,6 +89,10 @@ void REPL(char* argv[], Lexer* lexer) {
     } else if (strcmp(input, value.helpme) == 0){
       printf("USAGE: %s <file>\n", argv[0]);
       printf("Commands: .help, .linktosource, .websource, .freemem, .exit\n");
+      printf(".linktosource is for teleporting you to main source code\n");
+      printf(".websource is for teleporting you to the source code of our website\n");
+      printf(".freemem is for freeing memory\n");
+      printf(".exit is to exit the appilcation (tip. you can press Ctrl+C)\n");
       free(input);
       input = NULL;
     } else{
