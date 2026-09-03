@@ -27,6 +27,7 @@ struct value1
     const char *memclear; // To clear out memory
     const char *exiting; // To exit the appilcation 
     const char *helpme; // To help out on commands
+    const char *metarepo; //To teleport you to the meta repo
 };
 
 

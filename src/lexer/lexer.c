@@ -68,7 +68,6 @@ Token scanToken(Lexer* lexer) {
     } else if (isalpha(c)) {
       return handleName(lexer);
     }
-
     return setupErrorToken(lexer, "Unexpected character");
   }
 }

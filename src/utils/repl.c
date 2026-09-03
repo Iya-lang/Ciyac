@@ -32,12 +32,11 @@ static void run(Lexer* lexer) {
   Parser parser = initParser(lexer);
   parse(&parser);
   printAST(parser.ast_pool);
-  printf("If you need help, type .help!\n");
 }
 
 // See meaning on "utils/repl.h"
 void REPL(char* argv[], Lexer* lexer) {
-  struct value1 value = {".linktosource", ".websource", ".freemem", ".exit", ".help"};
+  struct value1 value = {".linktosource", ".websource", ".freemem", ".exit", ".help", ".metasource"};
   printf("Ciya v0.0.2 interactive REPL\n");
   // Following GNU rights
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
@@ -88,11 +87,24 @@ void REPL(char* argv[], Lexer* lexer) {
       input = NULL;
     } else if (strcmp(input, value.helpme) == 0){
       printf("USAGE: %s <file>\n", argv[0]);
-      printf("Commands: .help, .linktosource, .websource, .freemem, .exit\n");
+      printf("Commands: .help, .linktosource, .websource, .metasource, .freemem, .exit\n");
       printf(".linktosource is for teleporting you to main source code\n");
       printf(".websource is for teleporting you to the source code of our website\n");
       printf(".freemem is for freeing memory\n");
       printf(".exit is to exit the appilcation (tip. you can press Ctrl+C)\n");
+      printf(".metasource is where all the sources are present\n");
+      free(input);
+      input = NULL;
+    } else if (strcmp(input, value.metarepo) == 0){
+      printf("link: https://github.com/Iya-lang/Ciya.git\n");
+
+      #if defined(PLATFORM_LINUX)
+      system("xdg-open https://github.com/Iya-lang/Ciya.git");
+      #elif defined(PLATFORM_MACOS)
+      system("open https://github.com/Iya-lang/Ciya.git");
+      #elif defined(PLATFORM_WINDOWS)
+      system("start https://github.com/Iya-lang/Ciya.git");
+      #endif
       free(input);
       input = NULL;
     } else{
