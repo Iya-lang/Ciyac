@@ -6,7 +6,7 @@ release: 1
 section: "utils"
 priority: "optional"
 maintainer: "Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm"
-description: "A programming language made with care"
+description: "A programming language made with care, and going to be speedy"
 vendor: "Ciya-vm"
 homepage: "https://ciya-vm.github.io"
 license: "GPLv2"

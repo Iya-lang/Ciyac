@@ -16,21 +16,16 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdio.h>
 #include <stdlib.h>
+#include "misc/debug.h"
 #include "lexer/lexer.h"
 #include "parser/parser.h"
 #include "private.h"
 
-static void debugToken(Token* token) {
-  printf("==== Token ====\n");
-  printf("Type: %d\n", token->type); // Note: This will print 9 for everything except for +.
-  printf("Lexeme: %.*s\n\n", token->length, token->start);
-}
-
 Parser initParser(Lexer* lexer) {
   Parser parser;
   parser.lexer = lexer;
+  parser.lexer->line_start = parser.lexer->start;
   parser.previous.type = TOKEN_NONE;
   parser.current.type = TOKEN_NONE;
   parser.next.type = TOKEN_NONE;
@@ -42,8 +37,24 @@ Parser initParser(Lexer* lexer) {
 }
 
 void parse(Parser* parser) {
-  while (parser->current.type != TOKEN_EOF) {
-    moveToken(parser);
-    debugToken(&parser->current);
+  while (moveToken(parser).type != TOKEN_EOF) {
+    if (parser->had_error) {
+      parser->had_error = false; // reset the error flag for the next
+      break; // This should be enough
+    }
+    
+    switch (parser->current.type) {
+      case TOKEN_NUMBER:
+      case TOKEN_NAME:
+        parseExpr(parser, NODE_NUMBER, 0);
+        break;
+      case TOKEN_SAY:
+        parseSay(parser);
+        break;
+      default:
+        moveToken(parser);
+        error(parser, "Unexpected token", &parser->previous);
+        break;
+    }
   }
 }

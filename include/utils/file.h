@@ -18,7 +18,8 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #ifndef INCLUDE_UTILS_FILE_H
 #define INCLUDE_UTILS_FILE_H
+typedef struct Lexer Lexer;
 
-void runFile(char* filename);
+void runFile(char* filename, Lexer* lexer);
 
 #endif

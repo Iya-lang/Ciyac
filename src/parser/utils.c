@@ -16,17 +16,68 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include "misc/debug.h"
 #include "lexer/lexer.h"
 #include "lexer/token.h"
 #include "parser/parser.h"
+#include "parser/ast.h"
 #include "private.h"
 
 Token moveToken(Parser* parser) {
+  if (parser->current.type == TOKEN_NONE) {
+    parser->current = scanToken(parser->lexer);
+    parser->next = scanToken(parser->lexer);
+
+    if (parser->lexer->token_debug == true)
+      printToken(&parser->current);
+    return parser->current; //Will exit for error works
+  }
+
   parser->previous = parser->current;
   parser->current = parser->next;
   parser->next = scanToken(parser->lexer);
-  
-  if (parser->current.type == TOKEN_NONE)
-    moveToken(parser);
+  if (parser->lexer->token_debug == true)
+    printToken(&parser->current);
   return parser->current;
+}
+
+void error(Parser* parser, const char* message, Token* token) {
+  parser->had_error = true;
+
+  fprintf(stderr, "[ln %d, col %d] Error at '%.*s': %s\n", token->line, token->column, token->length, token->start, message);
+  const char* line_end = token->start;
+  while (*line_end != '\n' && *line_end != '\0') {
+    line_end++;
+  }
+  int line_length = line_end - parser->lexer->line_start;
+  printf("%4d| %.*s\n", token->line, line_length, parser->lexer->line_start);
+  printf("    | ");
+  for (unsigned int i = 0; i < (token->column - token->length); i++) {
+    printf(" ");
+  }
+  printf("^");
+  for (int i=1; i < token->length; i++) {
+    printf("~");
+  }
+  printf("\n");
+}
+
+void resizeASTPool(Parser* parser) {
+  parser->ast_pool.capacity *= 2;
+  parser->ast_pool.ast_list = realloc(parser->ast_pool.ast_list, sizeof(AST) * parser->ast_pool.capacity);
+  if (parser->ast_pool.ast_list == NULL)
+    error(parser, "Failed to resize AST pool", &parser->previous);
+}
+
+int createNode(Parser* parser, NODEType type) {
+  if (parser->ast_pool.count >= parser->ast_pool.capacity) {
+    resizeASTPool(parser);
+  }
+
+  int index = parser->ast_pool.count++;
+  AST* node = &parser->ast_pool.ast_list[index];
+  node->type = type;
+  return index;
 }

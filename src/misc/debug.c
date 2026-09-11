@@ -16,41 +16,24 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef INCLUDE_PARSER_AST_H
-#define INCLUDE_PARSER_AST_H
+#include <stdio.h>
+#include "parser/ast.h"
+#include "lexer/token.h"
+#include "misc/debug.h"
 
-typedef enum NODEType {
-  NODE_NUMBER,
-  NODE_NAME,
-
-  NODE_ADD,
-  NODE_SUBTRACT,
-  NODE_MULTIPLY,
-  NODE_DIVIDE,
-
-  NODE_ASSIGN,
-
-  NODE_SAY,
-} NODEType;
-
-
-typedef struct AST {
-  union {
-    struct {
-      char* start; unsigned int length;
-    } string;
-    double number;
-  } as;
-  NODEType type;
-  unsigned int left;
-  unsigned int right;
-} AST;
-
-typedef struct ASTPool {
-  AST* ast_list;
-  unsigned int count;
-  unsigned int capacity;
-} ASTPool;
-
-#endif
-
+void printAST(ASTPool pool) {
+  for (int i=0; i!=pool.count; i++) {
+    printf("====%d NODE====\n", i);
+    printf("Type: %d\n", pool.ast_list[i].type);
+    printf("Left Index: %d\n", pool.ast_list[i].left);
+    printf("Right Index: %d\n", pool.ast_list[i].right);
+    printf("Number: %g\n", pool.ast_list[i].as.number);
+    printf("String/Name: %.*s\n", pool.ast_list[i].as.string.length, pool.ast_list[i].as.string.start);
+    printf("\n");
+  }
+}
+void printToken(Token* token) {
+  printf("==== Token ====\n");
+  printf("Type: %d\n", token->type); // Note: This will print the token's type in digits
+  printf("Lexeme: %.*s\n\n", token->length, token->start);
+}

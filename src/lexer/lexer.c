@@ -30,7 +30,7 @@ static void skipSpaces(Lexer* lexer) {
       }
       break;
     case ' ':
-    case '\r': // Very uncommon in linux
+    case '\r': // Very uncommon in linux, common in windows
     case '\t': // Tab character
     case '\n': // Newline character
       moveChar(lexer);
@@ -68,14 +68,13 @@ Token scanToken(Lexer* lexer) {
     } else if (isalpha(c)) {
       return handleName(lexer);
     }
-
-    return setupToken(lexer, TOKEN_EOF/*replaced by TOKEN_ERROR later on*/);
+    return setupErrorToken(lexer, "Unexpected character");
   }
 }
 
-Lexer initLexer(char* src) {
-  Lexer lexer;
-  lexer.current = src;
-  lexer.start = src;
-  return lexer;
+void initLexer(char* src, Lexer* lexer) {
+  lexer->current = src;
+  lexer->start = src;
+  lexer->line = 1;
+  lexer->column = 0;
 }

@@ -16,41 +16,19 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef INCLUDE_PARSER_AST_H
-#define INCLUDE_PARSER_AST_H
 
-typedef enum NODEType {
-  NODE_NUMBER,
-  NODE_NAME,
+#ifndef REPL_VAR_H
+#define REPL_VAR_H
 
-  NODE_ADD,
-  NODE_SUBTRACT,
-  NODE_MULTIPLY,
-  NODE_DIVIDE,
+struct value1
+{
+    const char *linkingsource; // To teleport you to the offical source code
+    const char *linkingweb; // To teleport you to offical web source code
+    const char *memclear; // To clear out memory
+    const char *exiting; // To exit the appilcation 
+    const char *helpme; // To help out on commands
+    const char *metarepo; //To teleport you to the meta repo
+};
 
-  NODE_ASSIGN,
-
-  NODE_SAY,
-} NODEType;
-
-
-typedef struct AST {
-  union {
-    struct {
-      char* start; unsigned int length;
-    } string;
-    double number;
-  } as;
-  NODEType type;
-  unsigned int left;
-  unsigned int right;
-} AST;
-
-typedef struct ASTPool {
-  AST* ast_list;
-  unsigned int count;
-  unsigned int capacity;
-} ASTPool;
 
 #endif
-

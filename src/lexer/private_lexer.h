@@ -23,10 +23,12 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 
 // We put private and non-global lexer functions and objects here
 char peekChar(Lexer* lexer); // This function returns the current character
+char peekNChar(Lexer* lexer, int n); // This function returns the character at a specific offset
 char moveChar(Lexer* lexer); // Moves to the next character
 
 // Sets up the token for use in the parser
 Token setupToken(Lexer* lexer, TokenType type);
+Token setupErrorToken(Lexer* lexer, const char* message); // Sets up an error token for error reporting
 
 // These functions will handle token making for literals like numbers
 Token handleNumber(Lexer* lexer);

@@ -19,6 +19,22 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <ctype.h>
 #include "private_lexer.h"
 
+static Token checkKeywords(Lexer* lexer) {
+  switch (peekChar(lexer)) {
+    case 's':
+      if (peekNChar(lexer, 1) == 'a' && peekNChar(lexer, 2) == 'y') {
+        moveChar(lexer);
+        moveChar(lexer);
+        moveChar(lexer);
+        return setupToken(lexer, TOKEN_SAY);
+      }
+      break;
+    default:
+      break;
+  }
+  return setupToken(lexer, TOKEN_NAME);
+}
+
 Token handleNumber(Lexer* lexer) {
   while (isdigit(peekChar(lexer))) {
     moveChar(lexer);
@@ -33,5 +49,5 @@ Token handleName(Lexer* lexer) {
     moveChar(lexer);
   }
 
-  return setupToken(lexer, TOKEN_NAME);
+  return checkKeywords(lexer);
 }

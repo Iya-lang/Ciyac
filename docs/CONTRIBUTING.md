@@ -38,6 +38,19 @@ $ cmake --build build # Compiles the project
 $ ./build/ciya # Runs the executable (this may behave differently on Windows)
 ```
 
+## Errors
+
+When there's an return in code, I want to tell you there's a custom one now, instead of the
+outdated stuff like: `return 0` or `return 1`, I think it's doesn't specify much of 
+problem, so I make a custom one, and here's the list to analyse from as the 
+error is already is obvious when read.
+
+List:
+ * return 0: EXIT_SUCCESS
+ * return 2: RUNTIME_ERROR
+ * return 3: IO_ERROR
+ * reutrn 4: BUG_ERROR
+
 ## Is the Wiki outdated?
 If you see the wiki is outdated or factually wrong, please let us know by using **GitHub issues** 
 or email the contributor (phuocthanhlamnguyen@gmail.com). We'll reply and actively fix it

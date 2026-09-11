@@ -20,20 +20,23 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "misc/debug.h"
 #include "parser/parser.h"
 #include "lexer/lexer.h"
-#include "lexer/token.h"
-#include "utils/repl.h"
+#include "utils/repl.h" 
 #include "utils/getline.h"
 #include "misc/platform.h"
+#include "misc/repl_var.h"
 
 static void run(Lexer* lexer) {
   Parser parser = initParser(lexer);
   parse(&parser);
+  printAST(parser.ast_pool);
 }
 
 // See meaning on "utils/repl.h"
-void REPL(char* argv[]) {
+void REPL(char* argv[], Lexer* lexer) {
+  struct value1 value = {".linktosource", ".websource", ".freemem", ".exit", ".help", ".metasource"};
   printf("Ciya v0.0.2 interactive REPL\n");
   // Following GNU rights
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
@@ -49,48 +52,64 @@ void REPL(char* argv[]) {
     unsigned int count = 0;
     char* input = getLine(&count, stdin); // in here, we use a pointer to make it dynamically expandable
     input[count] = '\0'; // Manually put the null terminator
-    Lexer lexer;
-    if (strcmp(input, ".exit") == 0){
+    if (strcmp(input, value.exiting) == 0){
       printf("Exiting...\n");
       free(input);
       input = NULL;
       return;
-    } else if (strcmp(input, ".linktosource") == 0){
-      printf("link: https://github.com/johnryzon123/Ciya.git\n");
+    } else if (strcmp(input, value.linkingsource) == 0){
+      printf("link: https://github.com/Iya-lang/Ciyac.git\n");
 
       #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/johnryzon123/Ciya.git");
+      system("xdg-open https://github.com/Iya-lang/Ciyac.git");
       #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/johnryzon123/Ciya.git");
+      system("open https://github.com/Iya-lang/Ciyac.git");
       #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/johnryzon123/Ciya.git");
+      system("start https://github.com/Iya-lang/Ciyac.git");
       #endif
       free(input);
       input = NULL;
-    } else if (strcmp(input, ".freemem") == 0){
+    } else if (strcmp(input, value.memclear) == 0){
       free(input);
       input = NULL;
       printf("Memory free!\n");
-    } else if (strcmp(input, ".websource") == 0){
-      printf("link: https://github.com/Ciya-VM/Ciya-VM.github.io.git\n");
+    } else if (strcmp(input, value.linkingweb) == 0){
+      printf("link: https://github.com/Iya-lang/iya-lang.github.io.git\n");
 
       #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
+      system("xdg-open https://github.com/Iya-lang/iya-lang.github.io");
       #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/Ciya-VM/Ciya-VM.github.io.git");
+      system("open https://github.com/Iya-lang/iya-lang.github.io");
       #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/Ciya-VM/Ciya-VM.github.io.git");
+      system("start https://github.com/Iya-lang/iya-lang.github.io");
       #endif
       free(input);
       input = NULL;
-    } else if (strcmp(input, ".help") == 0){
-      printf("USAGE: %s <args (developing; not supported)>\n", argv[0]);
-      printf("Commands: .help, .linktosource, .websource, .freemem, .exit\n");
+    } else if (strcmp(input, value.helpme) == 0){
+      printf("USAGE: %s <file>\n", argv[0]);
+      printf("Commands: .help, .linktosource, .websource, .metasource, .freemem, .exit\n");
+      printf(".linktosource is for teleporting you to main source code\n");
+      printf(".websource is for teleporting you to the source code of our website\n");
+      printf(".freemem is for freeing memory\n");
+      printf(".exit is to exit the appilcation (tip. you can press Ctrl+C)\n");
+      printf(".metasource is where all the sources are present\n");
+      free(input);
+      input = NULL;
+    } else if (strcmp(input, value.metarepo) == 0){
+      printf("link: https://github.com/Iya-lang/Ciya.git\n");
+
+      #if defined(PLATFORM_LINUX)
+      system("xdg-open https://github.com/Iya-lang/Ciya.git");
+      #elif defined(PLATFORM_MACOS)
+      system("open https://github.com/Iya-lang/Ciya.git");
+      #elif defined(PLATFORM_WINDOWS)
+      system("start https://github.com/Iya-lang/Ciya.git");
+      #endif
       free(input);
       input = NULL;
     } else{
-      lexer = initLexer(input);
-      run(&lexer);
+      initLexer(input, lexer);
+      run(lexer);
     }
     free(input);
     input = NULL;
