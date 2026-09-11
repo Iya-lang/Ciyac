@@ -46,7 +46,7 @@ void parse(Parser* parser) {
     switch (parser->current.type) {
       case TOKEN_NUMBER:
       case TOKEN_NAME:
-        parseExpr(parser, NODE_ADD, 0);
+        parseExpr(parser, NODE_NUMBER, 0);
         break;
       case TOKEN_SAY:
         parseSay(parser);

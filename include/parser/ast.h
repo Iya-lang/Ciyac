@@ -20,15 +20,15 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #define INCLUDE_PARSER_AST_H
 
 typedef enum NODEType {
+  NODE_NUMBER,
+  NODE_NAME,
+
   NODE_ADD,
   NODE_SUBTRACT,
   NODE_MULTIPLY,
   NODE_DIVIDE,
 
   NODE_ASSIGN,
-
-  NODE_NUMBER,
-  NODE_NAME,
 
   NODE_SAY,
 } NODEType;

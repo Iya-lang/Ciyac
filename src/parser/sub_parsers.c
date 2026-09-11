@@ -33,16 +33,15 @@ static NODEType precedence(Parser* parser, TokenType type) {
     case TOKEN_DIVIDE:
       moveToken(parser);
       return NODE_DIVIDE;
-      // it doesn't support 1 value, gotta fix this
     default:
-      return -1;
+      return NODE_NUMBER;
   }
 }
 
 int parseValue(Parser* parser) {
   #define TYPE parser->current.type
   if (TYPE != TOKEN_NUMBER && TYPE != TOKEN_NAME) {
-    error(parser, "Expected a value", &parser->current);
+    error(parser, "Expected a value", &parser->previous);
     return -1;
   }
 
@@ -72,7 +71,7 @@ int parseExpr/*expression*/(Parser* parser, int min_weight, short op_count) {
   while (1) {
     Token current_op = parser->current;
     NODEType weight = precedence(parser, parser->current.type);
-    if (weight == -1) break;
+    if (weight == NODE_NUMBER) break;
     if (weight < min_weight) {
       break;
     }
