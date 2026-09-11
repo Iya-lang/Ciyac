@@ -16,22 +16,17 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdlib.h>
-#include <stdio.h> //For printf()
-#include "misc/return_vals.h"
-#include "utils/repl.h"
-#include "utils/file.h"
+#include "lexer/lexer.h"
+#include "lexer/token.h"
+#include "parser/parser.h"
+#include "private.h"
 
-// since you have custom return values then I'm making them
-int main(int argc, char* argv[]) {
-  if (argc > 2) {
-    fprintf(stderr, "USAGE: %s <command>\n", argv[0]);
-    return IO_ERROR;
-  } else if (argc == 2) {
-    runFile(argv[1]);
-    return EXIT_SUCCESS;
-  }
-
-  REPL(argv);
-  return EXIT_SUCCESS;
+Token moveToken(Parser* parser) {
+  parser->previous = parser->current;
+  parser->current = parser->next;
+  parser->next = scanToken(parser->lexer);
+  
+  if (parser->current.type == TOKEN_NONE)
+    moveToken(parser);
+  return parser->current;
 }
