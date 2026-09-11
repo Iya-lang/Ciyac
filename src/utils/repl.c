@@ -19,21 +19,17 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+#include "parser/parser.h"
 #include "lexer/lexer.h"
 #include "lexer/token.h"
-#include <string.h>
 #include "utils/repl.h"
 #include "utils/getline.h"
 #include "misc/platform.h"
 
-static void debugToken(Token* token) {
-  printf("==== Token ====\n");
-  printf("Type: %d\n", token->type); // Note: This will print 9 for everything except for +.
-  printf("Lexeme: %.*s\n\n", token->length, token->start);
-}
-
-static void run(Token token) {
-  debugToken(&token);
+static void run(Lexer* lexer) {
+  Parser parser = initParser(lexer);
+  parse(&parser);
 }
 
 // See meaning on "utils/repl.h"
@@ -50,7 +46,9 @@ void REPL(char* argv[]) {
     // An repl uses an "infinite" number of chars in input which means that NO LIMIT
     // to achieve this, I'll make a custom version of getline().
     printf(">>> "); // print the starting thing
-    char* input = getLine(); // in here, we use a pointer to make it dynamically expandable
+    unsigned int count = 0;
+    char* input = getLine(&count, stdin); // in here, we use a pointer to make it dynamically expandable
+    input[count] = '\0'; // Manually put the null terminator
     Lexer lexer;
     if (strcmp(input, ".exit") == 0){
       printf("Exiting...\n");
@@ -92,7 +90,7 @@ void REPL(char* argv[]) {
       input = NULL;
     } else{
       lexer = initLexer(input);
-      run(scanToken(&lexer));
+      run(&lexer);
     }
     free(input);
     input = NULL;

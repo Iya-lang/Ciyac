@@ -38,7 +38,7 @@ typedef struct AST {
   NODEType type;
   union {
     struct {
-      char* start; unsined int legth;
+      char* start; unsigned int legth;
     } string;
     double number;
   } as;
