@@ -1,4 +1,4 @@
-/*
+/* hello?
 Ciya: a future programming language VM that is hoped to be a bigger leap than the successor, "CRy"
     Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm
 
@@ -24,20 +24,21 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "utils/repl.h"
 #include "utils/file.h"
 
-bool checkFlags(char* argv[], Lexer* lexer) {
-  // argc is already handled in main
-  char* arg = argv[1];
-  bool isFlag = true;
-  if (arg[0] == '-' && arg[0] == '-') {
-    if (strcmp(arg, "--debug-tokens") == 0) {
-      lexer->token_debug = true; 
+int checkFlags(int argc, char* argv[], Lexer* lexer) {
+  int fileLocation = -1;
+  for (int i=1; argc != i; i++) {
+    if (argv[i][0] == '-' && argv[i][0] == '-') {
+      if (strcmp(argv[i], "--debug-tokens") == 0) {
+        lexer->token_debug = true; 
+      } else {
+        perror("Unknown flag.\n");
+        exit(IO_ERROR);
+      }
     } else {
-      isFlag = false;
+      fileLocation = i;
     }
-  } else
-    isFlag = false;
-
-  return isFlag;
+  }
+  return fileLocation;
 }
 
 // since you have custom return values then I'm making them, should we write the return in the docs
@@ -45,16 +46,13 @@ int main(int argc, char* argv[]) {
   Lexer lexer;
   lexer.token_debug = false;
 
-  if (argc > 2) {
-    fprintf(stderr, "USAGE: %s <command>\n", argv[0]);
-    return IO_ERROR;
-  } else if (argc == 2) {
-    if (!checkFlags(argv, &lexer)) {
-      runFile(argv[1], &lexer);
-      return EXIT_SUCCESS;
-    }
+  int fileLocation = checkFlags(argc, argv, &lexer);
+  printf("File Location: %d\n", fileLocation);
+  if (fileLocation != -1) {
+    runFile(argv[fileLocation], &lexer);
+    return EXIT_SUCCESS;
   }
-
+  
   REPL(argv, &lexer);
   return EXIT_SUCCESS;
 }
