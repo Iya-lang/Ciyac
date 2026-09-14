@@ -5,15 +5,15 @@
 
 Now, we're trying to make a new project called `Ciya`.
 
-**Ciya**, a fast, cross-platform programming language from the Philippines/Vietnam written in C.
-The name **Ciya** came from the word `Siya`, which means he/she in filipino/tagalog language, 
-We want `Ciya` to be a bigger and faster leap than its successor, `CRy-VM`.
+**Ciya**, a fast, cross-platform programming language from Southeast written in C.
+To continue with the Ry (Ry's for you) naming, we named **Ciya** from the word `Siya`, which means he/she in filipino/tagalog language.
 
-For now, we're still in development,
-but if you have any ideas to share, we'll try our best to achieve them.
+We didn't want `Ciya` to be a slop, instead, we want it to be bigger and faster leap than its successor, `CRy-VM`.
+
+If you have any ideas to share, we'll try our best to achieve them.
 
 ## Wanna collaborate?
-Please read our CONTRIBUTING file.
+Please read our `CONTRIBUTING.md` file.
 
 ## Essential tools:
   * [GCC](https://gcc.gnu.org/) ([Clang](https://clang.llvm.org/) or [Mircosoft C/C++ Compiler](https://aka.ms/vs/17/release/vs_BuildTools.exe)): for compiling code
@@ -24,12 +24,14 @@ Please read our CONTRIBUTING file.
 
 ## Why we made the project:
 We first made the project on July 22nd, 2026, which is very *early*, after the creator and owner of
-**CRy-VM** suggested a new language. So, we started this repo to be a *faster and bigger* leap than its successor, CRy-VM. As long ago, in **2024-2025**, the creator who made Ry1 found out he was using too much AI and heavy tools, heavy classes, etc., which made it unoptimized. So, we made Ciya! But really don't fork the older ones, as it's abandoned and no longer has
+**CRy-VM** suggested a new language. So, we started this repo to be a *faster and bigger* leap than its successor, CRy-VM. Long time ago, around **2024-2025**, I, the creator of Ry had found that it had too much AI, heavy tools, heavy classes, etc., which made it unoptimized.
+
+So, we made Ciya! But really don't fork the older ones, as it's abandoned and no longer has
 support.
 
 ## Pros:
- * Cross-compatible
- * Working lexer
+ * Cross-compatible except mobile devices such as android
+ * Working lexer/Parser
 ## Cons:
  * No standard libraries
 
@@ -58,7 +60,10 @@ And Booom, you can run it; it's that simple:
 ./ciya
 ```
 
-Here is every command altogether:
+Here is every command altogether
+
+
+**Note:** You may actually just download the file from the github releases page instead:
 ```bash
 curl -o ciya.tar.gz -L https://github.com/Ciya-VM/Ciya/archive/refs/tags/v0.0.3.tar.gz
 tar -xzvf ciya-linux.tar.gz
