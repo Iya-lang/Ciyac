@@ -1,4 +1,4 @@
-/* hello?
+/*
 Ciya: a future programming language VM that is hoped to be a bigger leap than the successor, "CRy"
     Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm
 
