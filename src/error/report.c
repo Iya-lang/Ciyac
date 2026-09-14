@@ -16,18 +16,34 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef SRC_PARSER_PRIVATE_H
-#define SRC_PARSER_PRIVATE_H
-typedef struct Parser Parser;
-typedef struct Token Token;
-typedef enum NODEType NODEType;
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include "lexer/token.h"
+#include "parser/parser.h"
+#include "error/report.h"
 
-int parseValue(Parser* parser);
-int parseExpr(Parser* parser, int min_weight, short op_count);
-void parseSay(Parser* parser);
+void Parser_reportError(Parser *parser, char* caret_symbol, Token* token, char *message__format, ...) {
 
-void resizeASTPool(Parser* parser);
-int createNode(Parser* parser, NODEType type);
+  fprintf(stderr, "[line %d: col %d] Error: ", token->line, token->column);
+  va_list args;
 
-Token moveToken(Parser* parser);
-#endif
+  va_start(args, message__format);
+  vprintf(message__format, args);
+  va_end(args);
+
+  printf("\n%4d | %s\n", token->line, parser->lexer->line_start);
+  printf("     |");
+  for (int i=0; i<token->column; i++) {
+    printf(" ");
+  }
+  printf("%s", caret_symbol);
+  for (int i=1; i<token->length; i++) printf("~");
+  printf("\n");
+
+  parser->had_error = true;
+  fprintf(stderr, "\nWARNING: all ast nodes are erased!\n");
+  free(parser->ast_pool.ast_list);
+  // Make sure no other instances accesses the asts even if it's not there
+  parser->ast_pool.count = 0;
+}

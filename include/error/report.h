@@ -16,18 +16,11 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef SRC_PARSER_PRIVATE_H
-#define SRC_PARSER_PRIVATE_H
-typedef struct Parser Parser;
+#ifndef INCLUDE_ERROR_REPORT_H
+#define INCLUDE_ERROR_REPORT_H
 typedef struct Token Token;
-typedef enum NODEType NODEType;
+typedef struct Parser Parser;
 
-int parseValue(Parser* parser);
-int parseExpr(Parser* parser, int min_weight, short op_count);
-void parseSay(Parser* parser);
+void Parser_reportError(Parser* parser, char* caret_symbol, Token* token, char* message__format, ...);
 
-void resizeASTPool(Parser* parser);
-int createNode(Parser* parser, NODEType type);
-
-Token moveToken(Parser* parser);
 #endif

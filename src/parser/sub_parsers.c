@@ -18,6 +18,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 */
 #include <stdbool.h>
 #include <stdlib.h>
+#include "error/report.h"
 #include "parser/ast.h"
 #include "parser/parser.h"
 #include "private.h"
@@ -41,7 +42,9 @@ static NODEType precedence(Parser* parser, TokenType type) {
 int parseValue(Parser* parser) {
   #define TYPE parser->current.type
   if (TYPE != TOKEN_NUMBER && TYPE != TOKEN_NAME) {
-    error(parser, "Expected a value", &parser->previous);
+    Parser_reportError(parser, "-^", &parser->current, \
+      "Expected value after '%.*s'.", \
+      parser->previous.length, parser->previous.start);
     return -1;
   }
 
