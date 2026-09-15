@@ -1,12 +1,15 @@
-# **Welcome to Ciya! (parser stage)**
-<img width="500" height="500" alt="drawing" src="https://github.com/user-attachments/assets/622fb2f4-5ae8-481f-ab5f-76778e812c9a" />
+<img alt="drawing" src="assets/branding.svg" />
+
+___
 
 **Welcome, dear reader!**
 
-Now, we're trying to make a new project called `Ciya`.
+**Iya**, a fast, cross-platform programming language from Southeast written in C. We named **Iya** after the Visayan word `Iyaha` which means her/his to symbol it's free and open source identity.
 
-**Ciya**, a fast, cross-platform programming language from Southeast written in C.
 To continue with the Ry (Ry's for you) naming, we named **Ciya** from the word `Siya`, which means he/she in filipino/tagalog language.
+
+We seperated **Ciya** from **Ciyac**.
+Ciya is the main **Iya** codebase while Ciyac is the main **Project** of the codebase. Ciyac means **CIYA C**ompiler.
 
 We didn't want `Ciya` to be a slop, instead, we want it to be bigger and faster leap than its successor, `CRy-VM`.
 
@@ -15,7 +18,13 @@ If you have any ideas to share, we'll try our best to achieve them.
 ## Wanna collaborate?
 Please read our `CONTRIBUTING.md` file.
 
-## Essential tools:
+## System Requirements
+
+| Ram | Cpu speed | Device |
+| ----- | --- | --- |
+| >1 GB | >1 GHz | x86_64 |
+
+## Build tools:
   * [GCC](https://gcc.gnu.org/) ([Clang](https://clang.llvm.org/) or [Mircosoft C/C++ Compiler](https://aka.ms/vs/17/release/vs_BuildTools.exe)): for compiling code
   * [CMAKE](https://cmake.org/): For building the build files
   * [MAKE](https://en.wikipedia.org/wiki/Make_(software)) (or other build systems like [Ninja](https://ninja-build.org/)): for building the program
