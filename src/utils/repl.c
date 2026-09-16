@@ -86,7 +86,6 @@ void REPL(char* argv[], Lexer* lexer) {
       free(input);
       input = NULL;
     } else if (strcmp(input, value.helpme) == 0){
-      printf("USAGE: %s <file>\n", argv[0]);
       
       printf("USAGE: %s <file>\n", argv[0]);
       printf("Commands: .help, .linktosource, .websource, .metasource, .freemem, .exit\n");
@@ -96,7 +95,13 @@ void REPL(char* argv[], Lexer* lexer) {
       printf(".exit is to exit the appilcation (tip. you can press Ctrl+C)\n");
       printf(".metasource is where all the sources are present\n");
 
-      printf("Go to '%s' for more information", "https://iya-lang.github.io/ciyac");
+      #if defined(PLATFORM_LINUX)
+      system("xdg-open index.html");
+      #elif defined(PLATFORM_MACOS)
+      system("open index.html");
+      #elif defined(PLATFORM_WINDOWS)
+      system("start index.html");
+      #endif
       free(input);
       input = NULL;
 
