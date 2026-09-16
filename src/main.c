@@ -47,7 +47,6 @@ int main(int argc, char* argv[]) {
   lexer.token_debug = false;
 
   int fileLocation = checkFlags(argc, argv, &lexer);
-  printf("File Location: %d\n", fileLocation);
   if (fileLocation != -1) {
     runFile(argv[fileLocation], &lexer);
     return EXIT_SUCCESS;
