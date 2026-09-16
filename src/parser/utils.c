@@ -16,8 +16,8 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdio.h>
 #include <stdlib.h>
+#include "error/report.h"
 #include "misc/debug.h"
 #include "lexer/lexer.h"
 #include "lexer/token.h"
@@ -43,32 +43,12 @@ Token moveToken(Parser* parser) {
   return parser->current;
 }
 
-void error(Parser* parser, const char* message, Token* token) {
-  parser->had_error = true;
-
-  fprintf(stderr, "[ln %d, col %d] Error at '%.*s': %s\n", token->line, token->column, token->length, token->start, message);
-  const char* line_end = token->start;
-  while (*line_end != '\n' && *line_end != '\0') {
-    line_end++;
-  }
-  int line_length = line_end - parser->lexer->line_start;
-  printf("%4d| %.*s\n", token->line, line_length, parser->lexer->line_start);
-  printf("    | ");
-  for (unsigned int i = 0; i < (token->column - token->length); i++) {
-    printf(" ");
-  }
-  printf("^");
-  for (int i=1; i < token->length; i++) {
-    printf("~");
-  }
-  printf("\n");
-}
-
 void resizeASTPool(Parser* parser) {
   parser->ast_pool.capacity *= 2;
   parser->ast_pool.ast_list = realloc(parser->ast_pool.ast_list, sizeof(AST) * parser->ast_pool.capacity);
   if (parser->ast_pool.ast_list == NULL)
-    error(parser, "Failed to resize AST pool", &parser->previous);
+    Parser_reportError(parser, "^", &parser->previous, "Failed to resize AST pool while making node at '%.*s'.", \
+      parser->previous.length, parser->previous.start);
 }
 
 int createNode(Parser* parser, NODEType type) {

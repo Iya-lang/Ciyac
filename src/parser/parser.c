@@ -17,6 +17,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include <stdlib.h>
+#include "error/report.h"
 #include "misc/debug.h"
 #include "lexer/lexer.h"
 #include "parser/parser.h"
@@ -53,7 +54,8 @@ void parse(Parser* parser) {
         break;
       default:
         moveToken(parser);
-        error(parser, "Unexpected token", &parser->previous);
+        Parser_reportError(parser, "^", &parser->previous, \
+          "Unknown symbol '%.*s'.", parser->previous.length, parser->previous.start);
         break;
     }
   }
