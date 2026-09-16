@@ -42,7 +42,7 @@ void Parser_reportError(Parser *parser, char* caret_symbol, Token* token, char *
   printf("\n");
 
   parser->had_error = true;
-  fprintf(stderr, "\nWARNING: all ast nodes are erased!\n");
+  fprintf(stderr, "\nWarning: AST nodes are currently discarded after parsing.\n");
   free(parser->ast_pool.ast_list);
   // Make sure no other instances accesses the asts even if it's not there
   parser->ast_pool.count = 0;
