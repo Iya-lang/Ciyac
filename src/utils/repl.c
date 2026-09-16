@@ -88,15 +88,18 @@ void REPL(char* argv[], Lexer* lexer) {
     } else if (strcmp(input, value.helpme) == 0){
       printf("USAGE: %s <file>\n", argv[0]);
       
-      #if defined(PLATFORM_LINUX)
-      system("xdg-open Ciyac/index.html");
-      #elif defined(PLATFORM_MACOS)
-      system("open index.html");
-      #elif defined(PLATFORM_WINDOWS)
-      system("start index.html");
-      #endif
+      printf("USAGE: %s <file>\n", argv[0]);
+      printf("Commands: .help, .linktosource, .websource, .metasource, .freemem, .exit\n");
+      printf(".linktosource is for teleporting you to main source code\n");
+      printf(".websource is for teleporting you to the source code of our website\n");
+      printf(".freemem is for freeing memory\n");
+      printf(".exit is to exit the appilcation (tip. you can press Ctrl+C)\n");
+      printf(".metasource is where all the sources are present\n");
+
+      printf("Go to '%s' for more information", "https://iya-lang.github.io/ciyac");
       free(input);
       input = NULL;
+
     } else if (strcmp(input, value.metarepo) == 0){
       printf("link: https://github.com/Iya-lang/Ciya.git\n");
 
