@@ -96,11 +96,11 @@ void REPL(char* argv[], Lexer* lexer) {
       printf(".metasource is where all the sources are present\n");
 
       #if defined(PLATFORM_LINUX)
-      system("xdg-open index.html");
+      system("xdg-open html/index.html");
       #elif defined(PLATFORM_MACOS)
-      system("open index.html");
+      system("open html/index.html");
       #elif defined(PLATFORM_WINDOWS)
-      system("start index.html");
+      system("start html/index.html");
       #endif
       free(input);
       input = NULL;
