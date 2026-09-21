@@ -30,6 +30,7 @@ Parser initParser(Lexer* lexer) {
   parser.previous.type = TOKEN_NONE;
   parser.current.type = TOKEN_NONE;
   parser.next.type = TOKEN_NONE;
+  parser.had_error = false;
 
   parser.ast_pool.capacity = 15;
   parser.ast_pool.count = 0;
@@ -52,10 +53,15 @@ void parse(Parser* parser) {
       case TOKEN_SAY:
         parseSay(parser);
         break;
-      default:
+      case TOKEN_ERROR:
         moveToken(parser);
         Parser_reportError(parser, "^", &parser->previous, \
           "Unknown symbol '%.*s'.", parser->previous.length, parser->previous.start);
+        break;
+      default:
+        moveToken(parser);
+        Parser_reportError(parser, "^", &parser->previous, \
+          "Token '%.*s' handled incorrectly.", parser->previous.length, parser->previous.start);
         break;
     }
   }

@@ -22,6 +22,7 @@ typedef struct Parser Parser;
 typedef struct Token Token;
 typedef enum NODEType NODEType;
 
+
 int parseValue(Parser* parser);
 int parseExpr(Parser* parser, int min_weight, short op_count);
 void parseSay(Parser* parser);
@@ -29,5 +30,6 @@ void parseSay(Parser* parser);
 void resizeASTPool(Parser* parser);
 int createNode(Parser* parser, NODEType type);
 
+Token peekToken(Parser* parser);
 Token moveToken(Parser* parser);
 #endif

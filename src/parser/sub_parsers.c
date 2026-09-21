@@ -39,29 +39,45 @@ static NODEType precedence(Parser* parser, TokenType type) {
   }
 }
 
+static NODEType getOPType(Parser* parser, NODEType fallback) {
+  switch (parser->previous.type) {
+    case TOKEN_MINUS:
+      return NODE_SUBTRACT;
+    case TOKEN_STAR:
+      return NODE_MULTIPLY;
+    case TOKEN_NAME:
+      return NODE_NAME;
+    default:
+      return fallback;
+  }
+}
+
 int parseValue(Parser* parser) {
-  #define TYPE parser->current.type
-  if (TYPE != TOKEN_NUMBER && TYPE != TOKEN_NAME) {
+  int weight = precedence(parser, parser->current.type);
+  
+  if (weight != NODE_NUMBER) {
     Parser_reportError(parser, "-^", &parser->current, \
       "Expected value after '%.*s'.", \
       parser->previous.length, parser->previous.start);
     return -1;
   }
 
+  NODEType type = getOPType(parser, NODE_NUMBER);
+
   #define asts parser->ast_pool.ast_list
   #define pool parser->ast_pool
-  if (parser->current.type == TOKEN_NUMBER) {
+  createNode(parser, type);
+
+  if (type == NODE_NUMBER) {
     createNode(parser, NODE_NUMBER);
     char* endptr;
     asts[pool.count - 1].as.number = strtod(parser->current.start, &endptr);
-  } else if (parser->current.type == TOKEN_NAME) {
-    createNode(parser, NODE_NAME);
+  } else if (type == NODE_NAME) {
     asts[pool.count - 1].as.string.start = parser->current.start;
     asts[pool.count - 1].as.string.length = parser->current.length;
   }
-  moveToken(parser);
-  #undef TYPE
 
+  moveToken(parser);
   return pool.count - 1;
   #undef pool
   #undef asts
@@ -73,7 +89,8 @@ int parseExpr/*expression*/(Parser* parser, int min_weight, short op_count) {
 
   while (1) {
     Token current_op = parser->current;
-    NODEType weight = precedence(parser, parser->current.type);
+    int weight = precedence(parser, parser->current.type);
+    NODEType weight_type = getOPType(parser, weight);
     if (weight == NODE_NUMBER) break;
     if (weight < min_weight) {
       break;
@@ -81,7 +98,7 @@ int parseExpr/*expression*/(Parser* parser, int min_weight, short op_count) {
 
     int right = parseExpr(parser, min_weight + 1, op_count++);
     if (right == -1 && parser->had_error) break;
-    left = createNode(parser, weight);
+    left = createNode(parser, weight_type);
     parser->ast_pool.ast_list[left].left = last_left;
     parser->ast_pool.ast_list[left].right = right;
   }

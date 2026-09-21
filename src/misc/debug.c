@@ -22,7 +22,7 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "misc/debug.h"
 
 void printAST(ASTPool pool) {
-  for (int i=0; i!=pool.count; i++) {
+  /* for (int i=0; i!=pool.count; i++) {
     printf("====%d NODE====\n", i);
     printf("Type: %d\n", pool.ast_list[i].type);
     printf("Left Index: %d\n", pool.ast_list[i].left);
@@ -30,7 +30,7 @@ void printAST(ASTPool pool) {
     printf("Number: %g\n", pool.ast_list[i].as.number);
     printf("String/Name: %.*s\n", pool.ast_list[i].as.string.length, pool.ast_list[i].as.string.start);
     printf("\n");
-  }
+  } */
 }
 void printToken(Token* token) {
   printf("==== Token ====\n");
