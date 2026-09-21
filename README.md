@@ -51,46 +51,7 @@ support.
 ## How to install the packages:
 <img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/b6a2cff3-7c81-464c-9775-82c822137046" />
 
-To install the Linux or BSD packages, use curl or wget; we'll use curl as it is very common:
-First, we get the tarball from the latest release:
-```bash
-curl -o ciya.tar.gz -L https://github.com/Ciya-VM/Ciya/archive/refs/tags/v0.0.3.tar.gz
-```
-
-And then, we extract it:
-```bash
-tar -xzvf ciya-linux.tar.gz
-```
-
-Apply permissions:
-```bash
-chmod +x ciya
-```
-
-And Booom, you can run it; it's that simple:
-```bash
-./ciya
-```
-
-Here is every command altogether
-
-
-**Note:** You may actually just download the file from the github releases page instead:
-```bash
-curl -o ciya.tar.gz -L https://github.com/Ciya-VM/Ciya/archive/refs/tags/v0.0.3.tar.gz
-tar -xzvf ciya-linux.tar.gz
-chmod +x ciya
-./ciya
-```
-
-But there are *different ways* to install the packages, and it depends on what fits you!
-An example is using a .deb file:
-```bash
-# Get the .deb file
-curl -o ciya.deb -L https://github.com/Ciya-VM/Ciya/releases/download/v0.0.3/ciya-linux_0.0.3_amd64.deb
-sudo apt install ciya.deb # Then just install it
-ciya # Run it
-```
+To install Ciyac, you must get the package or binary from the github releases page
 
 ## More details in:
 
