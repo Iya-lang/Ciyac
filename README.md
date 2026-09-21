@@ -1,4 +1,7 @@
-<img alt="drawing" src="assets/branding.svg" />
+<img
+  alt="Ciya programming language logo"
+  src="assets/branding.svg"
+/>
 
 ___
 
