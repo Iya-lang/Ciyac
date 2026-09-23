@@ -37,7 +37,6 @@ static void printREPLHead() {
   // Following GNU rights
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
   printf("Info: \n\
-  > https://github.com/Iya-lang/Ciyac\n\
   > https://iya-lang.github.io\n\
   > https://github.com/Iya-lang/Ciya\n\n");
 
@@ -50,24 +49,27 @@ static void printREPLHead() {
 
 static void handleCommands(char* exec_name, char* input, Lexer* lexer) {
   if (*input == '.') {
-    input += 1; // skip past the '.'
-    if (strcmp(input, "exit") == 0){
+    char* cmd = input + 1; // More safe?
+    
+    if (strcmp(cmd, "exit") == 0) {
       printf("Exiting...\n");
-      free(input -= 1);
-      input = NULL;
-      exit(EXIT_SUCCESS);
-    } else if (strcmp(input, "help") == 0){
-      
+      exit(EXIT_SUCCESS); 
+    } 
+    else if (strcmp(cmd, "help") == 0) {
       printf("USAGE: %s <file>\n", exec_name);
-      printf("Commands: .help, .linktosource, .websource, .metasource, .freemem, .exit\n");
+      printf("Commands: .help, .exit, .say\n");
     }
-  } else{
+    else if (strncmp(cmd, "say", 3) == 0) {
+      char* text = cmd + 3; // Skip past the word "say"
+      while (*text == ' ') text++; // Skip any extra spaces
+      
+      printf("%s\n", text);
+    }
+  } else {
     initLexer(input, lexer);
     run(lexer);
   }
-  input -= 1;
 }
-
 // See meaning on "utils/repl.h"
 void REPL(char* argv[], Lexer* lexer) {
   printREPLHead();
