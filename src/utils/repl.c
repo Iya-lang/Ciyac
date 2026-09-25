@@ -25,8 +25,6 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "lexer/lexer.h"
 #include "utils/repl.h" 
 #include "utils/getline.h"
-#include "misc/platform.h"
-#include "misc/repl_var.h"
 
 static void run(Lexer* lexer) {
   Parser parser = initParser(lexer);
@@ -34,93 +32,53 @@ static void run(Lexer* lexer) {
   printAST(parser.ast_pool);
 }
 
-// See meaning on "utils/repl.h"
-void REPL(char* argv[], Lexer* lexer) {
-  struct value1 value = {".linktosource", ".websource", ".freemem", ".exit", ".help", ".metasource"};
+static void printREPLHead() {
   printf("Ciya v0.0.2 interactive REPL\n");
   // Following GNU rights
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
+  printf("Info: \n\
+  > https://iya-lang.github.io\n\
+  > https://github.com/Iya-lang/Ciya\n\n");
+
   printf("License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>\n");
   printf("This is entirely free software: you are free to modify and redistribute it.\n");
   printf("There is NO WARRANTY, by the law of the GPL.\n\n");
 
   printf("Note: Type '.help' to view the current commands\n");
+}
+
+static void handleCommands(char* exec_name, char* input, Lexer* lexer) {
+  if (*input == '.') {
+    char* cmd = input + 1; // More safe?
+    
+    if (strcmp(cmd, "exit") == 0) {
+      printf("Exiting...\n");
+      exit(EXIT_SUCCESS); 
+    } 
+    else if (strcmp(cmd, "help") == 0) {
+      printf("USAGE: %s <file>\n", exec_name);
+      printf("Commands: .help, .exit, .say\n");
+    }
+    else if (strncmp(cmd, "say", 3) == 0) {
+      char* text = cmd + 3; // Skip past the word "say"
+      while (*text == ' ') text++; // Skip any extra spaces
+      
+      printf("%s\n", text);
+    }
+  } else {
+    initLexer(input, lexer);
+    run(lexer);
+  }
+}
+// See meaning on "utils/repl.h"
+void REPL(char* argv[], Lexer* lexer) {
+  printREPLHead();
   while (1) {
-    // An repl uses an "infinite" number of chars in input which means that NO LIMIT
-    // to achieve this, I'll make a custom version of getline().
     printf(">>> "); // print the starting thing
     unsigned int count = 0;
     char* input = getLine(&count, stdin); // in here, we use a pointer to make it dynamically expandable
     input[count] = '\0'; // Manually put the null terminator
-    if (strcmp(input, value.exiting) == 0){
-      printf("Exiting...\n");
-      free(input);
-      input = NULL;
-      return;
-    } else if (strcmp(input, value.linkingsource) == 0){
-      printf("link: https://github.com/Iya-lang/Ciyac.git\n");
-
-      #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/Iya-lang/Ciyac.git");
-      #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/Iya-lang/Ciyac.git");
-      #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/Iya-lang/Ciyac.git");
-      #endif
-      free(input);
-      input = NULL;
-    } else if (strcmp(input, value.memclear) == 0){
-      free(input);
-      input = NULL;
-      printf("Memory free!\n");
-    } else if (strcmp(input, value.linkingweb) == 0){
-      printf("link: https://github.com/Iya-lang/iya-lang.github.io.git\n");
-
-      #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/Iya-lang/iya-lang.github.io");
-      #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/Iya-lang/iya-lang.github.io");
-      #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/Iya-lang/iya-lang.github.io");
-      #endif
-      free(input);
-      input = NULL;
-    } else if (strcmp(input, value.helpme) == 0){
-      
-      printf("USAGE: %s <file>\n", argv[0]);
-      printf("Commands: .help, .linktosource, .websource, .metasource, .freemem, .exit\n");
-      printf(".linktosource is for teleporting you to main source code\n");
-      printf(".websource is for teleporting you to the source code of our website\n");
-      printf(".freemem is for freeing memory\n");
-      printf(".exit is to exit the appilcation (tip. you can press Ctrl+C)\n");
-      printf(".metasource is where all the sources are present\n");
-
-      #if defined(PLATFORM_LINUX)
-      system("xdg-open html/index.html");
-      #elif defined(PLATFORM_MACOS)
-      system("open html/index.html");
-      #elif defined(PLATFORM_WINDOWS)
-      system("start html/index.html");
-      #endif
-      free(input);
-      input = NULL;
-
-    } else if (strcmp(input, value.metarepo) == 0){
-      printf("link: https://github.com/Iya-lang/Ciya.git\n");
-
-      #if defined(PLATFORM_LINUX)
-      system("xdg-open https://github.com/Iya-lang/Ciya.git");
-      #elif defined(PLATFORM_MACOS)
-      system("open https://github.com/Iya-lang/Ciya.git");
-      #elif defined(PLATFORM_WINDOWS)
-      system("start https://github.com/Iya-lang/Ciya.git");
-      #endif
-      free(input);
-      input = NULL;
-    } else{
-      initLexer(input, lexer);
-      run(lexer);
-    }
+    handleCommands(argv[0], input, lexer);
     free(input);
     input = NULL;
   }

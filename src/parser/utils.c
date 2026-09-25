@@ -25,6 +25,10 @@ Ciya: a future programming language VM that is hoped to be a bigger leap than th
 #include "parser/ast.h"
 #include "private.h"
 
+Token peekToken(Parser* parser) {
+  return parser->current;
+}
+
 Token moveToken(Parser* parser) {
   if (parser->current.type == TOKEN_NONE) {
     parser->current = scanToken(parser->lexer);

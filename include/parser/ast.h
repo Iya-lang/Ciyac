@@ -37,7 +37,8 @@ typedef enum NODEType {
 typedef struct AST {
   union {
     struct {
-      char* start; unsigned int length;
+      char* start;
+      unsigned int length;
     } string;
     double number;
   } as;
