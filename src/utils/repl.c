@@ -38,7 +38,7 @@ static void printREPLHead() {
   printf("Copyright (C) 2026  Johnryzon Z. Abejero, Nguyễn Phước Thành Lâm\n");
   printf("Info: \n\
   > https://iya-lang.github.io\n\
-  > https://github.com/Iya-lang/Ciya\n\n");
+  > https://iya-lang.pages.dev/\n\n");
 
   printf("License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>\n");
   printf("This is entirely free software: you are free to modify and redistribute it.\n");
